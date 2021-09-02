@@ -1,0 +1,50 @@
+{
+  "name": "emotifier",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
+    "@reduxjs/toolkit": "^1.6.1",
+    "@types/react-redux": "^7.1.18",
+    "axios": "^0.21.1",
+    "clsx": "^1.1.1",
+    "country-flag-emoji": "^1.0.3",
+    "emoji-mart": "^3.0.1",
+    "emoji-regex": "^9.2.2",
+    "firebase": "^9.0.0-beta.7",
+    "grapheme-splitter": "^1.0.4",
+    "is-emoji-keyword": "^1.0.1",
+    "next": "11.1.0",
+    "next-redux-wrapper": "^7.0.2",
+    "node-emoji": "^1.11.0",
+    "notistack": "^1.0.10",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-facebook-login": "^4.1.1",
+    "react-google-login": "^5.2.2",
+    "react-redux": "^7.2.4",
+    "react-twemoji": "^0.3.0",
+    "redux": "^4.1.1",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.3.0",
+    "string.prototype.replaceall": "^1.0.5",
+    "styled-components": "^5.3.0",
+    "use-dark-mode": "^2.3.1"
+  },
+  "devDependencies": {
+    "@types/emoji-mart": "^3.0.5",
+    "@types/react": "17.0.17",
+    "@types/react-facebook-login": "^4.1.4",
+    "@types/styled-components": "^5.1.12",
+    "eslint": "7.32.0",
+    "eslint-config-next": "11.1.0",
+    "typescript": "4.3.5"
+  }
+}
