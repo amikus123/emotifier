@@ -9,7 +9,7 @@
 /client/coverage
 
 # next.js
-/client/.next/
+/client/.next/cache/
 /client/out/
 
 # production
