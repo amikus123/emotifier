@@ -44,7 +44,6 @@ pnp.js
 coverage
 
 # next.js
-client/.next/
 out
 
 # production
