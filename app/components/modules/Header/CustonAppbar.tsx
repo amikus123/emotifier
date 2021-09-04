@@ -36,12 +36,12 @@ const CustomAppbar = ({
         zIndex: theme.zIndex.drawer + 1,
       },
       menuButton: {
-        marginRight: theme.spacing(2),
+        margin: "0 0.5rem",
       },
       header: {
         height: "6.75rem",
-        [theme.breakpoints.up("sm")]: {
-          height: "3.75rem",
+        [theme.breakpoints.up("md")]: {
+          height: "4rem",
         },
       },
       toolbar: {
@@ -49,7 +49,10 @@ const CustomAppbar = ({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        justifyContent: "center",
+
         height: "100%",
+        
       },
       topRow: {
         width: "100%",
@@ -57,6 +60,8 @@ const CustomAppbar = ({
         justifyContent: "space-around",
         alignItems: "center",
         padding: "0 0.5rem",
+        height: "100%",
+
       },
     })
   );
@@ -68,7 +73,7 @@ const CustomAppbar = ({
         <div className={classes.topRow}>
           {/* Different logo component is showed based on screen width */}
           <Hidden smDown>
-            <LogoImage size="md" className={classes.menuButton} round={true} />
+            <LogoImage size="md" className={classes.menuButton}  />
           </Hidden>
           <Hidden mdUp>
             <Logo className={classes.menuButton} size="sm" image={false}/>

@@ -23,7 +23,6 @@ const LogoImage = ({ link = false,className="",size="lg",withText=false,round=fa
         height: `1em`,
         position: "relative",
         display: "inline-block",
-        marginLeft: "0.25rem",
         marginTop: withText?`calc(-1em /3)`:`0`,
         fontSize: fontSize[size],
       },

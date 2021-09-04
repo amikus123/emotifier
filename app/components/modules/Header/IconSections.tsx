@@ -12,6 +12,7 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import MailIcon from "@material-ui/icons/Mail";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import MenuIcon from "@material-ui/icons/Menu";
+import UserProfile from "../../elements/UserProfile/UserProfile";
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -98,6 +99,7 @@ const IconSections = ({
         >
           <AccountCircle />
         </IconButton>
+        <UserProfile/>
       </div>
 
       <div className={classes.sectionMobile}>
@@ -121,6 +123,8 @@ const IconSections = ({
             <MenuIcon />
           </IconButton>
         </MenuItem>
+        <UserProfile/>
+
       </div>
     </>
   );

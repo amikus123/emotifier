@@ -96,7 +96,7 @@ const HeaderSearch = ({ openSearch, handleSearchMenu }: Props) => {
           }
           inputProps={{ "aria-label": "search" }}
         /> */}
-        <EmojiInput text={text} setText={setText} abs={true} label="Search"/>
+        <EmojiInput text={text} setText={setText} abs={true} label="Search" suggsestions={true}/>
       </div>
 
       <div className={classes.grow} />

@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: "white",
     },
     tabsFlexContainer: {
-      backgroundColor: "purple",
+      backgroundColor: theme.palette.primary.main,
       width: "100%",
 
       [theme.breakpoints.up("md")]: {
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
     tabRoot: {
       minWidth: "20%",
       [theme.breakpoints.up("md")]: {
-        minWidth: "7.5rem",
+        minWidth: "5rem",
       },
     },
   })

@@ -99,7 +99,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <SnackbarProvider maxSnack={5}>
             <CssBaseline />
             <Component {...pageProps} />
-            <button style={{position:"absolute",zIndex:10000,}} onClick={()=>{signOut(auth)}}>log out</button>
+            {/* <button style={{position:"absolute",zIndex:10000,}} onClick={()=>{signOut(auth)}}>log out</button> */}
 
           </SnackbarProvider>
         </ThemeProvider>
