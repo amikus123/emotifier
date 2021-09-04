@@ -38,6 +38,18 @@ const CustomAppbar = ({
       menuButton: {
         margin: "0 0.5rem",
       },
+
+      first:{
+        padding: 0,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        flexWrap:"none",
+        flexGrow:1,
+        maxWidth:"400px",
+      },
+
       header: {
         height: "6.75rem",
         [theme.breakpoints.up("md")]: {
@@ -52,16 +64,14 @@ const CustomAppbar = ({
         justifyContent: "center",
 
         height: "100%",
-        
       },
       topRow: {
         width: "100%",
         display: "flex",
-        justifyContent: "space-around",
+        justifyContent: "space-between",
         alignItems: "center",
         padding: "0 0.5rem",
         height: "100%",
-
       },
     })
   );
@@ -72,20 +82,23 @@ const CustomAppbar = ({
       <Toolbar className={classes.toolbar}>
         <div className={classes.topRow}>
           {/* Different logo component is showed based on screen width */}
-          <Hidden smDown>
-            <LogoImage size="md" className={classes.menuButton}  />
-          </Hidden>
-          <Hidden mdUp>
-            <Logo className={classes.menuButton} size="sm" image={false}/>
-          </Hidden>
+          <div className={classes.first}>
+            <Hidden smDown>
+              <LogoImage size="md" className={classes.menuButton} />
+            </Hidden>
+            <Hidden mdUp>
+              <Logo className={classes.menuButton} size="sm" image={false} />
+            </Hidden>
 
-          <HeaderSearch
-            handleSearchMenu={handleSearchMenu}
-            openSearch={openSearch}
-          />
+            <HeaderSearch
+              handleSearchMenu={handleSearchMenu}
+              openSearch={openSearch}
+            />
+          </div>
+
           {/* Feed component has to be displayed in diffrent place depending on screen width */}
           <Hidden smDown>
-            <FeedTabs  mobile={false} />
+            <FeedTabs mobile={false} />
           </Hidden>
           <IconSections
             menuId={menuId}

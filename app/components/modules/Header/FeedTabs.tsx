@@ -11,6 +11,8 @@ import OndemandVideoIcon from "@material-ui/icons/OndemandVideo";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     // tabs classes
+    root:{
+    },
     paperRoot: {
       flexGrow: 1,
       width: "100%",
@@ -20,10 +22,12 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100%",
       backgroundColor: theme.palette.primary.main,
       color: "white",
+      
       overflow: "inherit",
       [theme.breakpoints.up("md")]: {
         groundColor: theme.palette.primary.main,
-        width: "fit-content",
+        maxWidth: "400px",
+        margin:"0 1rem",
       },
     },
 
@@ -35,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100%",
 
       [theme.breakpoints.up("md")]: {
-        width: "fit-content",
+        maxWidth: "400px",
       },
     },
 
@@ -44,6 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
       minWidth: "20%",
       [theme.breakpoints.up("md")]: {
         minWidth: "5rem",
+        maxWidth:"5rem"
       },
     },
   })
@@ -61,7 +66,7 @@ export default function FeedTabs({ mobile = false }: Props) {
   };
 
   return (
-    <PaperWrapper mobile={mobile}>
+    <PaperWrapper mobile={mobile} >
       <Tabs
         value={value}
         onChange={handleChange}

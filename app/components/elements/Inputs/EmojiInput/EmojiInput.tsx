@@ -60,11 +60,14 @@ const EmojiInput = ({
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {
+
         position: "relative",
         "& >*": {
           width: "100%",
         },
       },
+      input:{
+      }
     })
   );
   const classes = useStyles();
@@ -82,14 +85,15 @@ const EmojiInput = ({
       className={classes.root}
     >
       {children === null ? (
-        <FormControl variant="filled">
+        <FormControl variant="filled" >
           {label !== "" ? (
             <InputLabel htmlFor="filled-adornment-password">
               {capitalize(label)}
             </InputLabel>
           ) : null}
           <FilledInput
-            inputProps={{ autocomplete: "off" }}
+           className={classes.input}
+            inputProps={{ autoComplete: "off" }}
             name={label}
             type="text"
             value={text}

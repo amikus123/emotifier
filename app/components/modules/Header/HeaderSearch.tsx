@@ -18,15 +18,16 @@ const useStyles = makeStyles((theme: Theme) =>
 
     search: {
       position: "relative",
+      // marginRight:"0!important",
+
       borderRadius: theme.shape.borderRadius,
       backgroundColor: alpha(theme.palette.common.white, 1),
       "&:hover": {
         backgroundColor: alpha(theme.palette.common.white,0.9),
       },
       transition: "all 2s",
-      marginRight: theme.spacing(2),
-      marginLeft: 0,
-      maxWidth: "400px",
+     
+      maxWidth: "320px",
       width: "100%",
       [theme.breakpoints.up("sm")]: {
         marginLeft: theme.spacing(3),
@@ -68,6 +69,7 @@ interface Props {
 const HeaderSearch = ({ openSearch, handleSearchMenu }: Props) => {
   const classes = useStyles();
   const [text,setText] = useState("")
+  // add button to show it on mobile
   return (
     <>
       <div
@@ -77,25 +79,7 @@ const HeaderSearch = ({ openSearch, handleSearchMenu }: Props) => {
             : `${classes.search}  ${classes.inputClosed}`
         }
       >
-        {/* <div className={classes.searchIcon}>
-          <SearchIcon />
-        </div> */}
 
-        {/* <InputBase
-          placeholder="Search…"
-          classes={
-            openSearch
-              ? {
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }
-              : {
-                  root: `${classes.inputRoot}`,
-                  input: ` ${classes.inputInput} `,
-                }
-          }
-          inputProps={{ "aria-label": "search" }}
-        /> */}
         <EmojiInput text={text} setText={setText} abs={true} label="Search" suggsestions={true}/>
       </div>
 
