@@ -8,6 +8,8 @@ import MessageIcon from "@material-ui/icons/Message";
 import HomeIcon from "@material-ui/icons/Home";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import OndemandVideoIcon from "@material-ui/icons/OndemandVideo";
+import MenuIcon from "@material-ui/icons/Menu";
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     // tabs classes
@@ -55,9 +57,11 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 interface Props {
   mobile: boolean;
+  className:string
+
 }
 
-export default function FeedTabs({ mobile = false }: Props) {
+export default function FeedTabs({ mobile = false,className="" }: Props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -66,7 +70,7 @@ export default function FeedTabs({ mobile = false }: Props) {
   };
 
   return (
-    <PaperWrapper mobile={mobile} >
+    <PaperWrapper mobile={mobile}  >
       <Tabs
         value={value}
         onChange={handleChange}
@@ -75,7 +79,7 @@ export default function FeedTabs({ mobile = false }: Props) {
         centered
         classes={{
           indicator: classes.tabsIndicator,
-          root: classes.tabsRoot,
+          root: `${classes.tabsRoot} ${className}`,
           flexContainer: classes.tabsFlexContainer,
         }}
       >
@@ -100,7 +104,7 @@ export default function FeedTabs({ mobile = false }: Props) {
           classes={{ root: classes.tabRoot }}
         />
         <Tab
-          icon={<OndemandVideoIcon />}
+          icon={<MenuIcon />}
           aria-label="person"
           classes={{ root: classes.tabRoot }}
         />

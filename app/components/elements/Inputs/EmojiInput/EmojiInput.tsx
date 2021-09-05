@@ -43,7 +43,7 @@ interface Props {
   label?: string;
   abs?: boolean;
   children?: Element | null;
-  suggsestions?:boolean
+  suggsestions?: boolean;
 }
 
 const EmojiInput = ({
@@ -52,7 +52,7 @@ const EmojiInput = ({
   abs = false,
   children = null,
   label = "",
-  suggsestions=false
+  suggsestions = false,
 }: Props) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const x = useRef(null);
@@ -60,14 +60,12 @@ const EmojiInput = ({
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {
-
         position: "relative",
         "& >*": {
           width: "100%",
         },
       },
-      input:{
-      }
+      input: {},
     })
   );
   const classes = useStyles();
@@ -85,14 +83,14 @@ const EmojiInput = ({
       className={classes.root}
     >
       {children === null ? (
-        <FormControl variant="filled" >
+        <FormControl variant="filled">
           {label !== "" ? (
             <InputLabel htmlFor="filled-adornment-password">
               {capitalize(label)}
             </InputLabel>
           ) : null}
           <FilledInput
-           className={classes.input}
+            className={classes.input}
             inputProps={{ autoComplete: "off" }}
             name={label}
             type="text"

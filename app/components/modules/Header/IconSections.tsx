@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       zIndex: theme.zIndex.drawer + 1,
     },
-    menuButton: {
-      marginRight: theme.spacing(2),
+    button: {
+      padding: "0",
     },
 
     searchIcon: {
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
     sectionDesktop: {
       display: "flex",
-      marginRight:"1rem"
+      marginRight: "1rem",
     },
   })
 );
@@ -65,20 +65,11 @@ const IconSections = ({
   return (
     <>
       <div className={classes.sectionDesktop}>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="start"
-          onClick={handleDrawerToggle}
-          className={classes.menuButton}
-        >
-          <MenuIcon />
-        </IconButton>
         <Hidden mdUp>
-        <UserProfile text={false} />
+          <UserProfile text={false} className={classes.button} />
         </Hidden>
         <Hidden smDown>
-        <UserProfile text={true}/>
+          <UserProfile text={true} className={classes.button} />
         </Hidden>
       </div>
     </>

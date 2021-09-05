@@ -5,6 +5,7 @@ import {
   Theme,
   createStyles,
   alpha,
+  IconButton,
 } from "@material-ui/core";
 import EmojiInput from "../../elements/Inputs/EmojiInput/EmojiInput";
 
@@ -23,10 +24,10 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: theme.shape.borderRadius,
       backgroundColor: alpha(theme.palette.common.white, 1),
       "&:hover": {
-        backgroundColor: alpha(theme.palette.common.white,0.9),
+        backgroundColor: alpha(theme.palette.common.white, 0.9),
       },
       transition: "all 2s",
-     
+
       maxWidth: "320px",
       width: "100%",
       [theme.breakpoints.up("sm")]: {
@@ -45,46 +46,61 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       justifyContent: "center",
     },
-    inputRoot: {
-      color: "inherit",
-      transition: "2s all",
-    },
-    inputInput: {
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-      // transition: theme.transitions.create("width"),
-      transition: "2s all",
-      width: "100%",
-      [theme.breakpoints.up("md")]: {
-        width: "20ch",
-      },
+    aboslute: {
+      position: "absolute",
+      width:"60vw",
+      left:"32px"
     },
   })
 );
 interface Props {
   openSearch: boolean;
+  text: string;
+  setText: React.Dispatch<React.SetStateAction<string>>;
+  abs?: boolean;
   handleSearchMenu: (arg0: any) => any;
+  className?: string;
 }
-const HeaderSearch = ({ openSearch, handleSearchMenu }: Props) => {
+const HeaderSearch = ({
+  openSearch,
+  handleSearchMenu,
+  text,
+  setText,
+  abs = false,
+  className = "",
+}: Props) => {
   const classes = useStyles();
-  const [text,setText] = useState("")
+  const [showSearch, setShowSearch] = useState(true);
+
   // add button to show it on mobile
   return (
-    <>
-      <div
-        className={
-          openSearch
-            ? classes.search
-            : `${classes.search}  ${classes.inputClosed}`
-        }
-      >
-
-        <EmojiInput text={text} setText={setText} abs={true} label="Search" suggsestions={true}/>
-      </div>
-
-      <div className={classes.grow} />
-    </>
+    <div
+      className={
+        abs
+          ? `${classes.search} ${className} ${classes.aboslute}`
+          : `${classes.search}   ${className}`
+      }
+    >
+      {abs?(  <IconButton
+              aria-label="delete"
+              onClick={() => {
+                setShowSearch(!showSearch);
+              }}
+              className={classes.mobile}
+            >
+              <SearchIcon />
+            </IconButton>):(
+        null
+      )
+      }
+      <EmojiInput
+        text={text}
+        setText={setText}
+        abs={true}
+        label="Search"
+        suggsestions={true}
+      />
+    </div>
   );
 };
 

@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme: Theme) =>
       "&:hover": {
         cursor: "pointer",
       },
+      "& >*":{
+        padding:"0"
+      }
     },
     img: {
       width: "2rem",
@@ -22,13 +25,14 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 interface Props {
   text?: boolean;
+  className?:string;
 }
-const UserProfile = ({ text = true }: Props) => {
+const UserProfile = ({ text = true,className="" }: Props) => {
   const classes = useStyles();
 
   return (
     <Link href="/user" passHref>
-      <div className={classes.root}>
+      <div className={`${classes.root} ${className}`}>
         <IconButton>
           <Avatar
             alt="Remy Sharp"
