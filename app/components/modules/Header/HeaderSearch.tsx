@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: theme.shape.borderRadius,
 
       transition: "all 0.5s",
+      flexGrow: 1,
 
       maxWidth: "320px",
       // width: "100%",
@@ -42,10 +43,10 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     tablet: {
-      display: "block!important",
+      display: "none",
 
-      [theme.breakpoints.down("sm")]: {
-        display: "none!important",
+      [theme.breakpoints.up("sm")]: {
+        display: "block!important",
       },
  
     },
@@ -70,7 +71,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "2rem",
       height: "2rem",
       padding: "0",
-      backgroundColor: theme.palette.common.white,
+      // backgroundColor: theme.palette.common.white,
       [theme.breakpoints.up("sm")]: {
         width: "3.5rem",
         height: "3.5rem",

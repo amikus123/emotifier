@@ -56,11 +56,11 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexDirection: "row",
       alignItems: "center",
-      justifyContent: "center",
+      justifyContent: "flex-start",
       flexWrap: "nowrap",
-      position:"relative"
-      // flexGrow: 1,
-      // maxWidth: "400px",
+      position:"relative",
+      flexGrow: 1,
+      maxWidth: "400px",
     },
 
     header: {
