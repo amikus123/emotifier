@@ -44,6 +44,8 @@ interface Props {
   abs?: boolean;
   children?: Element | null;
   suggsestions?: boolean;
+  className?:string;
+  extraWidth?:string;
 }
 
 const EmojiInput = ({
@@ -53,6 +55,8 @@ const EmojiInput = ({
   children = null,
   label = "",
   suggsestions = false,
+  className="",
+  extraWidth="0px",
 }: Props) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const x = useRef(null);
@@ -80,7 +84,7 @@ const EmojiInput = ({
         console.log(x.current.contains(document.activeElement), 2);
         setShowEmojiPicker(true);
       }}
-      className={classes.root}
+      className={`${classes.root} ${className}`}
     >
       {children === null ? (
         <FormControl variant="filled">
@@ -102,7 +106,7 @@ const EmojiInput = ({
         children
       )}
       {showEmojiPicker ? (
-        <PureEmojiInput text={text} setText={setText} abs={abs} />
+        <PureEmojiInput text={text} setText={setText} abs={abs} extraWidth={extraWidth}/>
       ) : null}
       {suggsestions && showEmojiPicker ? <HeaderOptions text={text} /> : null}
     </Grid>

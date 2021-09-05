@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       justifyContent: "center",
       flexWrap: "nowrap",
-
+      position:"relative"
       // flexGrow: 1,
       // maxWidth: "400px",
     },
@@ -117,7 +117,7 @@ const CustomAppbar = ({
           <div className={classes.first}>
             <LogoImage
               size="md"
-              className={`${classes.menuButton} ${classes.desktop}`}
+              className={`${classes.menuButton} ${classes.mobileAndDesktop}`}
             />
             <Logo
               className={`${classes.menuButton} ${classes.tablet}`}
@@ -125,20 +125,10 @@ const CustomAppbar = ({
               image={false}
             />
 
-            {/* {showSearch ? null : (
-              <LogoImage
-                size="md"
-                className={`${classes.menuButton} ${classes.mobile}`}
-              />
-            )} */}
-
-          
-
+      
             <HeaderSearch
               text={text}
               setText={setText}
-              handleSearchMenu={handleSearchMenu}
-              openSearch={openSearch}
               className={classes.desktop}
             />
 
@@ -147,8 +137,6 @@ const CustomAppbar = ({
                 abs={true}
                 text={text}
                 setText={setText}
-                handleSearchMenu={handleSearchMenu}
-                openSearch={openSearch}
                 className={classes.mobile}
               />
             ) : null}

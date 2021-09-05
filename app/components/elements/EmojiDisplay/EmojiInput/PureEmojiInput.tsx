@@ -5,18 +5,19 @@ interface Props {
   text: string;
   setText?: (e: string) => void;
   abs?: boolean;
+  extraWidth?:string
 }
-const PureEmojiInput = ({ text, setText, abs = false }: Props) => {
+const PureEmojiInput = ({ text, setText, abs = false,extraWidth="0px" }: Props) => {
   return (
     <Picker
       style={
         abs
           ? {
-              width: "100%",
+              width: `calc(100% + ${extraWidth})`,
               position: "absolute",
               zIndex: 400,
               top: "56px",
-              left: 0,
+              left: `-${extraWidth}`,
             }
           : {
               width: "100%",

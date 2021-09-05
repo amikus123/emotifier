@@ -19,20 +19,35 @@ const useStyles = makeStyles((theme: Theme) =>
 
     search: {
       position: "relative",
-      // marginRight:"0!important",
-
+      display: "flex",
+      alignItems: "center",
       borderRadius: theme.shape.borderRadius,
+
+      transition: "all 0.5s",
+
+      maxWidth: "320px",
+      // width: "100%",
+      [theme.breakpoints.up("sm")]: {
+        marginLeft: theme.spacing(3),
+      },
+
       backgroundColor: alpha(theme.palette.common.white, 1),
       "&:hover": {
         backgroundColor: alpha(theme.palette.common.white, 0.9),
       },
-      transition: "all 2s",
-
-      maxWidth: "320px",
-      width: "100%",
+    },
+    mobile: {
       [theme.breakpoints.up("sm")]: {
-        marginLeft: theme.spacing(3),
+        display: "none!important",
       },
+    },
+    tablet: {
+      display: "block!important",
+
+      [theme.breakpoints.down("sm")]: {
+        display: "none!important",
+      },
+ 
     },
     inputClosed: {
       width: "25%!important",
@@ -48,58 +63,106 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     aboslute: {
       position: "absolute",
-      width:"60vw",
-      left:"32px"
+      left: "3.5rem",
+      display: "flex",
+    },
+    abosluteButton: {
+      width: "2rem",
+      height: "2rem",
+      padding: "0",
+      backgroundColor: theme.palette.common.white,
+      [theme.breakpoints.up("sm")]: {
+        width: "3.5rem",
+        height: "3.5rem",
+      },
+    },
+    openButton: {},
+
+    absoluteOpen: {
+      width: "60vw",
+      left: "0.25rem",
+      [theme.breakpoints.up("sm")]: {
+        left: "-1rem",
+      },
+    },
+    child: {
+      width: "100%",
     },
   })
 );
 interface Props {
-  openSearch: boolean;
   text: string;
   setText: React.Dispatch<React.SetStateAction<string>>;
   abs?: boolean;
-  handleSearchMenu: (arg0: any) => any;
   className?: string;
 }
 const HeaderSearch = ({
-  openSearch,
-  handleSearchMenu,
   text,
   setText,
   abs = false,
   className = "",
 }: Props) => {
   const classes = useStyles();
-  const [showSearch, setShowSearch] = useState(true);
+  const [showSearch, setShowSearch] = useState(false);
 
   // add button to show it on mobile
   return (
     <div
       className={
         abs
-          ? `${classes.search} ${className} ${classes.aboslute}`
+          ? `${classes.search} ${className} ${classes.aboslute} ${
+              showSearch ? classes.absoluteOpen : ""
+            } `
           : `${classes.search}   ${className}`
       }
     >
-      {abs?(  <IconButton
-              aria-label="delete"
-              onClick={() => {
-                setShowSearch(!showSearch);
-              }}
-              className={classes.mobile}
-            >
-              <SearchIcon />
-            </IconButton>):(
-        null
-      )
-      }
-      <EmojiInput
-        text={text}
-        setText={setText}
-        abs={true}
-        label="Search"
-        suggsestions={true}
-      />
+      {abs ? (
+        <IconButton
+          aria-label="delete"
+          onClick={() => {
+            setShowSearch(!showSearch);
+          }}
+          className={`${classes.abosluteButton} ${
+            showSearch ? classes.openButton : ""
+          }`}
+        >
+          <SearchIcon />
+        </IconButton>
+      ) : null}
+
+      {abs ? (
+        showSearch ? (
+          <>
+            <EmojiInput
+              text={text}
+              setText={setText}
+              abs={true}
+              label="Search"
+              suggsestions={true}
+              className={`${classes.child} ${classes.mobile}`}
+              extraWidth="2rem"
+            />
+            <EmojiInput
+              text={text}
+              setText={setText}
+              abs={true}
+              label="Search"
+              suggsestions={true}
+              className={`${classes.child} ${classes.tablet}`}
+              extraWidth="3.5rem"
+            />
+          </>
+        ) : null
+      ) : (
+        <EmojiInput
+          text={text}
+          setText={setText}
+          abs={true}
+          label="Search"
+          suggsestions={true}
+          className={classes.child}
+        />
+      )}
     </div>
   );
 };

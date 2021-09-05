@@ -26,7 +26,7 @@ import {
   setPersistence,
   signOut,
 } from "firebase/auth";
-
+import "../style.css"
 const firebaseConfig = {
   apiKey: "AIzaSyCTrM0_9ApX9TZiSgdevPgm8UyWvVG1dzA",
   authDomain: "emotifier.firebaseapp.com",
