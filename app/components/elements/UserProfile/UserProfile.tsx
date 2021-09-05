@@ -29,13 +29,14 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   text?: string;
   className?: string;
+  onClick?:(arg:any)=>any
 }
-const UserProfile = ({ text = "", className = "" }: Props) => {
+const UserProfile = ({ text = "", className = "",onClick =()=>{}}: Props) => {
   const classes = useStyles();
 
   return (
-    <Link href="/user" passHref>
-      <div className={`${classes.root} ${className}`}>
+    // <Link href="/user" passHref>
+      <div className={`${classes.root} ${className}`} onClick={onClick}>
         <IconButton>
           <Avatar
             alt="Remy Sharp"
@@ -45,7 +46,7 @@ const UserProfile = ({ text = "", className = "" }: Props) => {
         </IconButton>
         {text !== "" ? <Typography className={classes.name}>{text}</Typography> : null}
       </div>
-    </Link>
+    // </Link>
   );
 };
 

@@ -11,7 +11,7 @@ const HeaderSearchController = ({ text, setText }: Props) => {
       <HeaderSearch text={text} setText={setText} className="showDesktop" />
 
       <HeaderSearch
-        abs={true}
+        abs={false}
         text={text}
         setText={setText}
         className="hideDesktop"

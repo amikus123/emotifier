@@ -14,15 +14,15 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface Props {}
+interface Props {handleDrawerToggle: ()=>void}
 
-const IconSections = ({}: Props) => {
+const IconSections = ({handleDrawerToggle}: Props) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <UserProfile className={`${classes.button} showMobile`} />
-      <UserProfile text="pog" className={`${classes.button} hideMobile`} />
+      <UserProfile className={`${classes.button} showMobile`} onClick={handleDrawerToggle}/>
+      <UserProfile text="pog" className={`${classes.button} hideMobile`} onClick={handleDrawerToggle}/>
     </div>
   );
 };

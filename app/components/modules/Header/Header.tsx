@@ -4,12 +4,10 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconSections from "./IconSections";
 import LogoImage from "../../elements/Logo/LogoImage";
-import Logo from "../../elements/Logo/Logo";
 import HeaderTabs from "./HeaderTabs/HeaderTabs";
 import HeaderSearchController from "./HeaderSearch/HeaderSearchController";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-  
     menuButton: {
       margin: "0 0.5rem",
     },
@@ -56,8 +54,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface Props {}
-const Header = ({}: Props) => {
+interface Props {
+  setTabNumber: React.Dispatch<React.SetStateAction<number>>;
+  handleDrawerToggle: () => void;
+}
+const Header = ({ setTabNumber, handleDrawerToggle }: Props) => {
   const classes = useStyles();
   const [text, setText] = useState("");
 
@@ -67,15 +68,26 @@ const Header = ({}: Props) => {
         <Toolbar className={classes.toolbar}>
           <div className={classes.topRow}>
             <div className={classes.first}>
-              <LogoImage size="md" className={`${classes.menuButton} `} />
+              <LogoImage
+                size="md"
+                className={`${classes.menuButton} hideMobile `}
+              />
               <HeaderSearchController text={text} setText={setText} />
             </div>
             {/* Feed component has to be displayed in 
             diffrent place depending on screen width */}
-            <HeaderTabs mobile={false} className="showDesktop" />
-            <IconSections />
+            <HeaderTabs
+              mobile={false}
+              className="showDesktop"
+              setTabNumber={setTabNumber}
+            />
+            <IconSections handleDrawerToggle={handleDrawerToggle} />
           </div>
-          <HeaderTabs mobile={true} className="hideDesktop" />
+          <HeaderTabs
+            mobile={true}
+            className="hideDesktop"
+            setTabNumber={setTabNumber}
+          />
         </Toolbar>
       </AppBar>
     </div>

@@ -91,23 +91,19 @@ const HeaderSearch = ({
           : `${classes.search}   ${className}`
       }
     >
-      {abs ? (
         <IconButton
           aria-label="delete"
           onClick={() => {
             setShowSearch(!showSearch);
           }}
-          className={`${classes.abosluteButton} ${
+          className={`${classes.abosluteButton} showMobile ${
             showSearch ? classes.openButton : ""
           }`}
         >
           <SearchIcon />
         </IconButton>
-      ) : null}
-      {/* input shuld be bigger if button takes more space
-      on tablet */}
-      {abs ? (
-        showSearch ? (
+     
+       { showSearch ? (
           <>
             <EmojiInput
               text={text}
@@ -116,7 +112,7 @@ const HeaderSearch = ({
               label="Search"
               suggsestions={true}
               className={`${classes.child} showMobile`}
-              extraWidth="2rem"
+              extraWidth="0"
             />
             <EmojiInput
               text={text}
@@ -128,17 +124,17 @@ const HeaderSearch = ({
               extraWidth="3.5rem"
             />
           </>
-        ) : null
-      ) : (
-        <EmojiInput
-          text={text}
-          setText={setText}
-          abs={true}
-          label="Search"
-          suggsestions={true}
-          className={classes.child}
-        />
-      )}
+        ) : null}
+         <EmojiInput
+              text={text}
+              setText={setText}
+              abs={true}
+              label="Search"
+              suggsestions={true}
+              className={`${classes.child} showDesktop`}
+              extraWidth="3.5rem"
+            />
+      
     </div>
   );
 };

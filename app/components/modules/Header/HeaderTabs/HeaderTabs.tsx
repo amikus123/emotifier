@@ -12,8 +12,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     // tabs classes
-    root:{
-    },
+    root: {},
     paperRoot: {
       flexGrow: 1,
       width: "100%",
@@ -23,12 +22,12 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100%",
       backgroundColor: theme.palette.primary.main,
       color: "white",
-      
+
       overflow: "inherit",
       [theme.breakpoints.up("md")]: {
         groundColor: theme.palette.primary.main,
         maxWidth: "400px",
-        margin:"0 1rem",
+        margin: "0 1rem",
       },
     },
 
@@ -49,18 +48,22 @@ const useStyles = makeStyles((theme: Theme) =>
       minWidth: "20%",
       [theme.breakpoints.up("md")]: {
         minWidth: "5rem",
-        maxWidth:"5rem"
+        maxWidth: "5rem",
       },
     },
   })
 );
 interface Props {
   mobile: boolean;
-  className:string
-
+  className: string;
+  setTabNumber: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function FeedTabs({ mobile = false,className="" }: Props) {
+export default function FeedTabs({
+  mobile = false,
+  className = "",
+  setTabNumber,
+}: Props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -68,8 +71,15 @@ export default function FeedTabs({ mobile = false,className="" }: Props) {
     setValue(newValue);
   };
 
+  const tabData = [
+    { icon: <HomeIcon />, label: "HomePage" },
+    { icon: <FavoriteIcon />, label: "Favorites" },
+    { icon: <MessageIcon />, label: "Messages" },
+    { icon: <NotificationsIcon />, label: "Notifications" },
+    { icon: <MenuIcon />, label: "Menu" },
+  ];
   return (
-    <PaperWrapper mobile={mobile}  >
+    <PaperWrapper mobile={mobile}>
       <Tabs
         value={value}
         onChange={handleChange}
@@ -82,31 +92,19 @@ export default function FeedTabs({ mobile = false,className="" }: Props) {
           flexContainer: classes.tabsFlexContainer,
         }}
       >
-        <Tab
-          icon={<HomeIcon />}
-          aria-label="phone"
-          classes={{ root: classes.tabRoot }}
-        />
-        <Tab
-          icon={<FavoriteIcon />}
-          aria-label="favorite"
-          classes={{ root: classes.tabRoot }}
-        />
-        <Tab
-          icon={<MessageIcon />}
-          aria-label="favorite"
-          classes={{ root: classes.tabRoot }}
-        />
-        <Tab
-          icon={<NotificationsIcon />}
-          aria-label="favorite"
-          classes={{ root: classes.tabRoot }}
-        />
-        <Tab
-          icon={<MenuIcon />}
-          aria-label="person"
-          classes={{ root: classes.tabRoot }}
-        />
+        {tabData.map((data, key) => {
+          return (
+            <Tab
+              icon={data.icon}
+              aria-label={data.label}
+              onClick={() => {
+                setTabNumber(key);
+              }}
+              key={key}
+              classes={{ root: classes.tabRoot }}
+            />
+          );
+        })}
       </Tabs>
     </PaperWrapper>
   );
