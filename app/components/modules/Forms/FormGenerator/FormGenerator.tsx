@@ -5,7 +5,7 @@ import EmailInput from "../../../elements/Inputs/EmailInput/EmailInput";
 import PasswordInput from "../../../elements/Inputs/PasswordInput/PasswordInput";
 import EmojiInput from "../../../elements/Inputs/EmojiInput/EmojiInput";
 import { makeStyles, Theme, createStyles } from "@material-ui/core";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 const options = {
   emailLogin: {
@@ -36,13 +36,13 @@ interface Props {
 }
 const FormGenerator = ({ handleSubmit, type }: Props) => {
   const [formValues, setFormValues] = useState(options[type].defaultValues);
-  const router = useRouter()
+  const router = useRouter();
 
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {
         "&  >div": {
-          width: "400px",
+          width: "100%",
           paddingBottom: "2rem",
           "& >div": {
             width: "100%",
@@ -65,14 +65,13 @@ const FormGenerator = ({ handleSubmit, type }: Props) => {
       onSubmit={async (e) => {
         console.log("submited");
         e.preventDefault();
-        if(type === "usernameInput"){
-         const res =  await handleSubmit(formValues.username);
-         if (res==="registered"){
-router.push("/feed")
-         }
-        }else{
+        if (type === "usernameInput") {
+          const res = await handleSubmit(formValues.username);
+          if (res === "registered") {
+            router.push("/feed");
+          }
+        } else {
           await handleSubmit(formValues);
-
         }
       }}
     >
@@ -105,7 +104,14 @@ router.push("/feed")
           />
         ) : null}
 
-        <Button variant="contained" color="primary" type="submit" onClick={()=>{console.log("kilklo")}} > 
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          onClick={() => {
+            console.log("kilklo");
+          }}
+        >
           Submit
         </Button>
       </Grid>

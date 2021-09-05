@@ -48,7 +48,6 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up("sm")]: {
         display: "block!important",
       },
- 
     },
     inputClosed: {
       width: "25%!important",

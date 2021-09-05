@@ -69,7 +69,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const InnerContent = () => {
     const [theme, setTheme] = useState(getThemeFromString("light"));
     const themeString = useSelector(selectTheme);
-    useRedirectUserIfNecessary()
+    // useRedirectUserIfNecessary()
     useEffect(() => {
       setTheme({ ...theme, ...getThemeFromString(themeString) });
     }, [themeString]);
@@ -110,15 +110,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       {shouldRedirectLogged(router.pathname) ? (
-        <>
           <InnerContent />
-        </>
       ) : (
-        <>
-          {/* <Header /> */}
           <InnerContent />
-          {/* <Footer /> */}
-        </>
       )}
     </Provider>
   );
