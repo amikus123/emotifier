@@ -17,18 +17,13 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       borderRadius: theme.shape.borderRadius,
       transition: "all 0.5s",
-      flexGrow: 1,
       maxWidth: "320px",
+      width: "min-content",
       [theme.breakpoints.up("sm")]: {
         marginLeft: theme.spacing(3),
       },
-
-      backgroundColor: alpha(theme.palette.common.white, 1),
-      "&:hover": {
-        backgroundColor: alpha(theme.palette.common.white, 0.9),
-      },
     },
-
+    colors: {},
     searchIcon: {
       padding: theme.spacing(0, 2),
       height: "100%",
@@ -47,20 +42,32 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "2rem",
       height: "2rem",
       padding: "0",
+      marginRight:"0.5rem",
+      backgroundColor: alpha(theme.palette.common.white, 1),
+      "&:hover": {
+        backgroundColor: alpha(theme.palette.common.white, 1),
+      },
       [theme.breakpoints.up("sm")]: {
         width: "3.5rem",
         height: "3.5rem",
       },
     },
     openButton: {},
-
-    absoluteOpen: {
-      width: "60vw",
-      left: "0.25rem",
-      [theme.breakpoints.up("sm")]: {
-        left: "-1rem",
+    showInput: {
+      transition: "0.5s all",
+      width: "55vw",
+      maxWidth:"320px",
+      backgroundColor: alpha(theme.palette.common.white, 1),
+      "&:hover": {
+        backgroundColor: alpha(theme.palette.common.white, 0.9),
       },
     },
+    hideInput: {
+      width: "0vw!important",
+      overflow: "hidden",
+      transition: "0.5s all",
+    },
+    grow: {},
     child: {
       width: "100%",
     },
@@ -83,58 +90,41 @@ const HeaderSearch = ({
 
   return (
     <div
-      className={
-        abs
-          ? `${classes.search} ${className} ${classes.aboslute} ${
-              showSearch ? classes.absoluteOpen : ""
-            } `
-          : `${classes.search}   ${className}`
-      }
+      className={`${classes.search}   ${className} ${
+        showSearch ? classes.colors : ""
+      }`}
     >
-        <IconButton
-          aria-label="delete"
-          onClick={() => {
-            setShowSearch(!showSearch);
-          }}
-          className={`${classes.abosluteButton} showMobile ${
-            showSearch ? classes.openButton : ""
-          }`}
-        >
-          <SearchIcon />
-        </IconButton>
-     
-       { showSearch ? (
-          <>
-            <EmojiInput
-              text={text}
-              setText={setText}
-              abs={true}
-              label="Search"
-              suggsestions={true}
-              className={`${classes.child} showMobile`}
-              extraWidth="0"
-            />
-            <EmojiInput
-              text={text}
-              setText={setText}
-              abs={true}
-              label="Search"
-              suggsestions={true}
-              className={`${classes.child} showTablet`}
-              extraWidth="3.5rem"
-            />
-          </>
-        ) : null}
-         <EmojiInput
-              text={text}
-              setText={setText}
-              abs={true}
-              label="Search"
-              suggsestions={true}
-              className={`${classes.child} showDesktop`}
-              extraWidth="3.5rem"
-            />
-      
+      <IconButton
+        aria-label="delete"
+        onClick={() => {
+          setShowSearch(!showSearch);
+        }}
+        className={`${classes.abosluteButton} showMobile ${
+          showSearch ? classes.openButton : ""
+        }`}
+      >
+        <SearchIcon />
+      </IconButton>
+      <EmojiInput
+        text={text}
+        setText={setText}
+        abs={true}
+        label="Search"
+        suggsestions={true}
+        className={`${showSearch ? classes.showInput : classes.hideInput} showMobile`}
+        extraWidth="0"
+      />
+
+  
+      <EmojiInput
+        text={text}
+        setText={setText}
+        abs={true}
+        label="Search"
+        suggsestions={true}
+        className={`${classes.showInput} hideMobile`}
+        extraWidth="0"
+      />
     </div>
   );
 };

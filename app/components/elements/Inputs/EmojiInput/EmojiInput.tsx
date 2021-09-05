@@ -43,6 +43,7 @@ interface Props {
   suggsestions?: boolean;
   className?:string;
   extraWidth?:string;
+  inputClasses?:string
 }
 
 const EmojiInput = ({
@@ -54,6 +55,7 @@ const EmojiInput = ({
   suggsestions = false,
   className="",
   extraWidth="0px",
+  inputClasses=""
 }: Props) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const x = useRef(null);
@@ -91,7 +93,7 @@ const EmojiInput = ({
             </InputLabel>
           ) : null}
           <FilledInput
-            className={classes.input}
+            className={`${classes.input} ${inputClasses}`}
             inputProps={{ autoComplete: "off" }}
             name={label}
             type="text"
