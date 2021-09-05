@@ -1,4 +1,54 @@
-body{
-  width:100vw;
-  overflow-x:hidden;
+body {
+  width: 100vw;
+  overflow-x: hidden;
 }
+
+/* classes for showing contnet based on screen width */
+/* putting them in js creates a lot of duplicated code */
+
+@media screen and (max-width: 600px) {
+  .hideMobile {
+    display: none !important;
+  }
+  .showTablet {
+    display: none !important;
+
+  }
+  .showDesktop {
+    display: none !important;
+
+  }
+}
+
+@media screen and (min-width:600px) and (max-width: 960px) {
+  .hideTablet {
+    display: none !important;
+  }
+  .showMobile {
+    display: none !important;
+
+  }
+  .showDesktop {
+    display: none !important;
+
+  }
+}
+@media screen and (min-width: 960px) {
+  .hideDesktop {
+  display: none !important;
+
+  }
+  .showTablet {
+    display: none !important;
+
+  }
+  .showMobile {
+    display: none !important;
+
+  }
+}
+
+
+
+
+

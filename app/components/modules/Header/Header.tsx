@@ -1,88 +1,85 @@
 import React, { useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import MobileHeaderMenu from "./MobileHeaderMenu";
-import DesktopHeaderMenu from "./DesktopHeaderMenu";
-import { Hidden } from "@material-ui/core";
-import CustomAppbar from "./CustonAppbar";
-
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconSections from "./IconSections";
+import LogoImage from "../../elements/Logo/LogoImage";
+import Logo from "../../elements/Logo/Logo";
+import HeaderTabs from "./HeaderTabs/HeaderTabs";
+import HeaderSearchController from "./HeaderSearch/HeaderSearchController";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    grow: {
+  
+    menuButton: {
+      margin: "0 0.5rem",
+    },
+
+    first: {
+      padding: 0,
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "flex-start",
+      flexWrap: "nowrap",
+      position: "relative",
+      flexGrow: 1,
+      maxWidth: "400px",
+    },
+
+    header: {
+      height: "6.75rem",
+      [theme.breakpoints.up("md")]: {
+        height: "4rem",
+      },
+    },
+    toolbar: {
+      padding: 0,
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      height: "100%",
+    },
+    topRow: {
+      width: "100%",
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: "0 0.5rem",
+      height: "100%",
+    },
+    wrapper: {
       position: "relative",
       flexGrow: 1,
       zIndex: theme.zIndex.drawer + 1,
     },
   })
 );
-interface Props {
-  handleDrawerToggle: () => void;
-}
 
-export default function Header({ handleDrawerToggle }: Props) {
+interface Props {}
+const Header = ({}: Props) => {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-    useState<null | HTMLElement>(null);
-
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const [openSearch, setOpenSearch] = useState(true);
-  const handleSearchMenu = () => {
-    setOpenSearch(!openSearch);
-  };
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-
-  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
-  const menuId = "primary-search-account-menu";
-
-  const mobileMenuId = "primary-search-account-menu-mobile";
+  const [text, setText] = useState("");
 
   return (
-    <div className={classes.grow}>
-      <CustomAppbar
-        handleSearchMenu={handleSearchMenu}
-        openSearch={openSearch}
-        mobileMenuId={mobileMenuId}
-        menuId={menuId}
-        handleMobileMenuClose={handleMobileMenuClose}
-        handleDrawerToggle={handleDrawerToggle}
-        handleProfileMenuOpen={handleProfileMenuOpen}
-        handleMobileMenuOpen={handleMobileMenuOpen}
-      />
-
-      <Hidden mdUp>
-        <MobileHeaderMenu
-          mobileMoreAnchorEl={mobileMoreAnchorEl}
-          mobileMenuId={mobileMenuId}
-          isMobileMenuOpen={isMobileMenuOpen}
-          handleMobileMenuClose={handleMobileMenuClose}
-          handleDrawerToggle={handleDrawerToggle}
-          handleProfileMenuOpen={handleProfileMenuOpen}
-        />
-      </Hidden>
-      
-      <Hidden mdDown>
-        <DesktopHeaderMenu
-          anchorEl={anchorEl}
-          menuId={menuId}
-          isMenuOpen={isMenuOpen}
-          handleMenuClose={handleMenuClose}
-        />
-      </Hidden>
+    <div className={classes.wrapper}>
+      <AppBar position="static" className={classes.header}>
+        <Toolbar className={classes.toolbar}>
+          <div className={classes.topRow}>
+            <div className={classes.first}>
+              <LogoImage size="md" className={`${classes.menuButton} `} />
+              <HeaderSearchController text={text} setText={setText} />
+            </div>
+            {/* Feed component has to be displayed in 
+            diffrent place depending on screen width */}
+            <HeaderTabs mobile={false} className="showDesktop" />
+            <IconSections />
+          </div>
+          <HeaderTabs mobile={true} className="hideDesktop" />
+        </Toolbar>
+      </AppBar>
     </div>
   );
-}
+};
+
+export default Header;

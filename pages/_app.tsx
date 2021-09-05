@@ -50,7 +50,7 @@ export const db = getFirestore();
 
 function MyApp({ Component, pageProps }: AppProps) {
   // prevents flickering, might remove it
-  // const [isMounted, setIsMounted] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   // enable for production, forces user to input his name if it missing
   const router = useRouter();
   useEffect(() => {
@@ -69,25 +69,28 @@ function MyApp({ Component, pageProps }: AppProps) {
   const InnerContent = () => {
     const [theme, setTheme] = useState(getThemeFromString("light"));
     const themeString = useSelector(selectTheme);
+    // this should be enabled for production, forces user to redirect
     // useRedirectUserIfNecessary()
-    useEffect(() => {
-      setTheme({ ...theme, ...getThemeFromString(themeString) });
-    }, [themeString]);
+    // useEffect(() => {
+    //   setTheme({ ...theme, ...getThemeFromString(themeString) });
+    // }, [themeString]);
     const auth = getAuth();
 
     const init = async () => {
       try {
         await setPersistence(auth, browserLocalPersistence);
+        setIsMounted(true)
         console.log("persistance set")
         console.log(auth.currentUser, "user")
       } catch (err) {
         console.error("Auth initialization error: ", err);
       }
     };
-    // ()
+
     useEffect(() => {
       init();
     }, []);
+
     return (
       <>
         <meta
@@ -109,11 +112,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <Provider store={store}>
-      {shouldRedirectLogged(router.pathname) ? (
-          <InnerContent />
-      ) : (
-          <InnerContent />
-      )}
+            <InnerContent />
+
     </Provider>
   );
 }

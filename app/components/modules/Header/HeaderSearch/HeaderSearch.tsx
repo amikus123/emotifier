@@ -7,27 +7,18 @@ import {
   alpha,
   IconButton,
 } from "@material-ui/core";
-import EmojiInput from "../../elements/Inputs/EmojiInput/EmojiInput";
+import EmojiInput from "../../../elements/Inputs/EmojiInput/EmojiInput";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    grow: {
-      position: "relative",
-      flexGrow: 1,
-      zIndex: theme.zIndex.drawer + 1,
-    },
-
     search: {
       position: "relative",
       display: "flex",
       alignItems: "center",
       borderRadius: theme.shape.borderRadius,
-
       transition: "all 0.5s",
       flexGrow: 1,
-
       maxWidth: "320px",
-      // width: "100%",
       [theme.breakpoints.up("sm")]: {
         marginLeft: theme.spacing(3),
       },
@@ -37,21 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: alpha(theme.palette.common.white, 0.9),
       },
     },
-    mobile: {
-      [theme.breakpoints.up("sm")]: {
-        display: "none!important",
-      },
-    },
-    tablet: {
-      display: "none",
 
-      [theme.breakpoints.up("sm")]: {
-        display: "block!important",
-      },
-    },
-    inputClosed: {
-      width: "25%!important",
-    },
     searchIcon: {
       padding: theme.spacing(0, 2),
       height: "100%",
@@ -70,7 +47,6 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "2rem",
       height: "2rem",
       padding: "0",
-      // backgroundColor: theme.palette.common.white,
       [theme.breakpoints.up("sm")]: {
         width: "3.5rem",
         height: "3.5rem",
@@ -105,7 +81,6 @@ const HeaderSearch = ({
   const classes = useStyles();
   const [showSearch, setShowSearch] = useState(false);
 
-  // add button to show it on mobile
   return (
     <div
       className={
@@ -129,7 +104,8 @@ const HeaderSearch = ({
           <SearchIcon />
         </IconButton>
       ) : null}
-
+      {/* input shuld be bigger if button takes more space
+      on tablet */}
       {abs ? (
         showSearch ? (
           <>
@@ -139,7 +115,7 @@ const HeaderSearch = ({
               abs={true}
               label="Search"
               suggsestions={true}
-              className={`${classes.child} ${classes.mobile}`}
+              className={`${classes.child} showMobile`}
               extraWidth="2rem"
             />
             <EmojiInput
@@ -148,7 +124,7 @@ const HeaderSearch = ({
               abs={true}
               label="Search"
               suggsestions={true}
-              className={`${classes.child} ${classes.tablet}`}
+              className={`${classes.child} showTablet`}
               extraWidth="3.5rem"
             />
           </>

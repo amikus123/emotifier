@@ -10,9 +10,6 @@ const Feed = () => {
   return (
     <>
       <Header
-        handleDrawerToggle={() => {
-          setMobileOpen(!mobileOpen);
-        }}
       />
       <SideDrawer
         handleDrawerToggle={() => {

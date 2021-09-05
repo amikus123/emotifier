@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import facebookLogo from "../../../../public/facebookLogo.svg";
-import { IconButton } from "@material-ui/core";
+import { IconButton, Typography } from "@material-ui/core";
 import Link from "next/link";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -13,21 +13,24 @@ const useStyles = makeStyles((theme: Theme) =>
       "&:hover": {
         cursor: "pointer",
       },
-      "& >*":{
-        padding:"0"
-      }
+      "& >*": {
+        padding: "0",
+      },
     },
     img: {
       width: "2rem",
       height: "2rem",
     },
+    name:{
+      marginLeft:"0.5rem",
+    }
   })
 );
 interface Props {
-  text?: boolean;
-  className?:string;
+  text?: string;
+  className?: string;
 }
-const UserProfile = ({ text = true,className="" }: Props) => {
+const UserProfile = ({ text = "", className = "" }: Props) => {
   const classes = useStyles();
 
   return (
@@ -40,7 +43,7 @@ const UserProfile = ({ text = true,className="" }: Props) => {
             className={classes.img}
           />
         </IconButton>
-        {text ? <p>Amadeusz</p> : null}
+        {text !== "" ? <Typography className={classes.name}>{text}</Typography> : null}
       </div>
     </Link>
   );

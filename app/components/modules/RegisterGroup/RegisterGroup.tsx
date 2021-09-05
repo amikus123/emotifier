@@ -7,7 +7,6 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import Link from "next/link";
-
 import Logo from "../../elements/Logo/Logo";
 import ModalButton from "../../elements/Buttons/ModalButton/ModalButton";
 
@@ -15,8 +14,6 @@ const RegisterGroup = ({ className = "" }: { className?: string }) => {
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {
-        // width: "100%",
-        // margin: "0 auto",
         maxWidth: "25rem",
         [theme.breakpoints.down("xs")]: {
           maxHeight: "100vh",

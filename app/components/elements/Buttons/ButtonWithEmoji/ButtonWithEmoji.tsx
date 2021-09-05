@@ -6,14 +6,8 @@ import {
   makeStyles,
   Theme,
 } from "@material-ui/core";
-interface Props {
-  icon: any;
-  onClick: () => any;
-  className?: string;
-  children: any;
-}
-const ButtonWithEmoji = ({ icon, onClick, className, children }: Props) => {
-  const useStyles = makeStyles((theme: Theme) =>
+
+const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {
         justifyContent: "start",
@@ -22,6 +16,14 @@ const ButtonWithEmoji = ({ icon, onClick, className, children }: Props) => {
       },
     })
   );
+interface Props {
+  icon: any;
+  onClick: () => any;
+  className?: string;
+  children: any;
+}
+const ButtonWithEmoji = ({ icon, onClick, className, children }: Props) => {
+  
   const classes = useStyles();
 
   return (

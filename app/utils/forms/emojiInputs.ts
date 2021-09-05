@@ -1,8 +1,8 @@
 const emojiRegexRGI = require("emoji-regex/RGI_Emoji.js");
 
-export const allowDeletesGenerator = (setText: (arg0: any) => any) => {
+export const allowEmojisAndDeleting = (setText: (arg0: any) => any) => {
   // Generates function which allows user to manually
-  // enter emojis into emoji inputs
+  // enter emojis into emoji inputs, and to delete them
 
   const res = (e: any) => {
     const regex = emojiRegexRGI();

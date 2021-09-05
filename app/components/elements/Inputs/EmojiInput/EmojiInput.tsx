@@ -8,20 +8,17 @@ import {
   Theme,
 } from "@material-ui/core";
 import React, { useEffect, useRef, useState } from "react";
-import PureEmojiInput from "../../EmojiDisplay/EmojiInput/PureEmojiInput";
-import { allowDeletesGenerator } from "../../../../utils/forms/emojiInputs";
+import { allowEmojisAndDeleting } from "../../../../utils/forms/emojiInputs";
 import { capitalize } from "../../../../utils/general/stringManipulation";
-import Header from "../../../modules/Header/Header";
 import HeaderOptions from "../../../modules/Search/SearchSuggestions/HeaderOptions";
+import PureEmojiInput from "../EmojiPicker/EmojiPicker";
 
 function useOutsideAlerter(
   ref,
   toggle: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   useEffect(() => {
-    /**
-     * Alert if clicked on outside of element
-     */
+   
     function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
         console.log("You clicked outside of me!");
@@ -99,7 +96,7 @@ const EmojiInput = ({
             name={label}
             type="text"
             value={text}
-            onChange={allowDeletesGenerator(setText)}
+            onChange={allowEmojisAndDeleting(setText)}
           />
         </FormControl>
       ) : (

@@ -1,11 +1,14 @@
 import { Picker } from "emoji-mart";
 import React from "react";
 
+// this component is used with other inputs to allow user to 
+// enter emojis withouth special keyboard
 interface Props {
   text: string;
   setText?: (e: string) => void;
   abs?: boolean;
-  extraWidth?:string
+  extraWidth?:string 
+  
 }
 const PureEmojiInput = ({ text, setText, abs = false,extraWidth="0px" }: Props) => {
   return (

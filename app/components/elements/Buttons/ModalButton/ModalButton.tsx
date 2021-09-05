@@ -17,10 +17,7 @@ import {
 } from "../../../../utils/auth/register";
 import { Link } from "@material-ui/core";
 import FormGenerator from "../../../modules/Forms/FormGenerator/FormGenerator";
-interface Props {
-  name: "google" | "facebook" | "email" | "login";
-  children?;
-}
+
 
 const options = {
   google: {
@@ -44,9 +41,15 @@ const options = {
     handleSubmit: loginWithEmail,
   },
 };
+
+interface Props {
+  name: "google" | "facebook" | "email" | "login";
+  children?: any;
+}
+// This component is used in registration to display modal
+
 export const ModalButton = ({ name, children }: Props) => {
   const [open, setOpen] = React.useState(false);
-
   const handleClickOpen = async () => {
     if (name === "facebook" || name === "google") {
       const res = await options[name].handleSubmit();

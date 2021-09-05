@@ -1,7 +1,6 @@
 import { Typography, createStyles, makeStyles, Theme } from "@material-ui/core";
 import Link from "next/link";
 import React from "react";
-import rainbowLogo from "../../../../public/rainbowLogo.png";
 import LogoImage from "./LogoImage";
 
 interface Props {
