@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import {
   makeStyles,
@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme: Theme) =>
         marginLeft: theme.spacing(3),
       },
     },
-    colors: {},
     searchIcon: {
       padding: theme.spacing(0, 2),
       height: "100%",
@@ -42,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "2rem",
       height: "2rem",
       padding: "0",
-      marginRight:"0.5rem",
+      marginRight: "0.5rem",
       backgroundColor: alpha(theme.palette.common.white, 1),
       "&:hover": {
         backgroundColor: alpha(theme.palette.common.white, 1),
@@ -54,9 +53,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     openButton: {},
     showInput: {
-      transition: "0.5s all",
       width: "55vw",
-      maxWidth:"320px",
+      maxWidth: "320px",
       backgroundColor: alpha(theme.palette.common.white, 1),
       "&:hover": {
         backgroundColor: alpha(theme.palette.common.white, 0.9),
@@ -65,45 +63,32 @@ const useStyles = makeStyles((theme: Theme) =>
     hideInput: {
       width: "0vw!important",
       overflow: "hidden",
-      transition: "0.5s all",
-    },
-    grow: {},
-    child: {
-      width: "100%",
     },
   })
 );
 interface Props {
   text: string;
   setText: React.Dispatch<React.SetStateAction<string>>;
-  abs?: boolean;
   className?: string;
 }
-const HeaderSearch = ({
-  text,
-  setText,
-  abs = false,
-  className = "",
-}: Props) => {
+const HeaderSearch = ({ text, setText, className = "" }: Props) => {
   const classes = useStyles();
   const [showSearch, setShowSearch] = useState(false);
-
+  const [counter, setCounter] = useState(1);
+  const ignoredClass = "header";
   return (
-    <div
-      className={`${classes.search}   ${className} ${
-        showSearch ? classes.colors : ""
-      }`}
-    >
+    <div className={`${classes.search}   ${className} ${ignoredClass} ${showSearch ? "" : ""}`}>
       <IconButton
         aria-label="delete"
-        onClick={() => {
+        onClick={(e) => {
           setShowSearch(!showSearch);
+          setCounter(counter + 1);
         }}
-        className={`${classes.abosluteButton} showMobile ${
+        className={`${classes.abosluteButton} showMobile ${ignoredClass} ${
           showSearch ? classes.openButton : ""
         }`}
       >
-        <SearchIcon />
+        <SearchIcon  className={ignoredClass}/>
       </IconButton>
       <EmojiInput
         text={text}
@@ -111,11 +96,13 @@ const HeaderSearch = ({
         abs={true}
         label="Search"
         suggsestions={true}
-        className={`${showSearch ? classes.showInput : classes.hideInput} showMobile`}
-        extraWidth="0"
+        className={`${
+          showSearch ? classes.showInput : classes.hideInput
+        } showMobile`}
+        counter={counter}
+        ignoredClass={ignoredClass}
       />
 
-  
       <EmojiInput
         text={text}
         setText={setText}
@@ -123,7 +110,7 @@ const HeaderSearch = ({
         label="Search"
         suggsestions={true}
         className={`${classes.showInput} hideMobile`}
-        extraWidth="0"
+        ignoredClass={ignoredClass}
       />
     </div>
   );
