@@ -19,3 +19,4 @@ export const getUserById = async (id: string) :Promise<GetDocRes> =>  {
     return null
   }
 };
+

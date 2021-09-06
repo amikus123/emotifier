@@ -26,7 +26,10 @@ import {
   setPersistence,
   signOut,
 } from "firebase/auth";
+
 import "../style.css"
+import { useChangeUserStoreData } from "../app/hooks/authChange";
+
 const firebaseConfig = {
   apiKey: "AIzaSyCTrM0_9ApX9TZiSgdevPgm8UyWvVG1dzA",
   authDomain: "emotifier.firebaseapp.com",
@@ -50,7 +53,6 @@ export const db = getFirestore();
 
 function MyApp({ Component, pageProps }: AppProps) {
   // prevents flickering, might remove it
-  const [isMounted, setIsMounted] = useState(false);
   // enable for production, forces user to input his name if it missing
   const router = useRouter();
   useEffect(() => {
@@ -74,12 +76,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     // useEffect(() => {
     //   setTheme({ ...theme, ...getThemeFromString(themeString) });
     // }, [themeString]);
+    useChangeUserStoreData()
     const auth = getAuth();
 
     const init = async () => {
       try {
         await setPersistence(auth, browserLocalPersistence);
-        setIsMounted(true)
         console.log("persistance set")
         console.log(auth.currentUser, "user")
       } catch (err) {
@@ -113,7 +115,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
             <InnerContent />
-
     </Provider>
   );
 }

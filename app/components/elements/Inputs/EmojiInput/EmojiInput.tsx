@@ -14,7 +14,7 @@ import HeaderOptions from "../../../modules/Search/SearchSuggestions/HeaderOptio
 import PureEmojiInput from "../EmojiPicker/EmojiPicker";
 
 function useOutsideAlerter(
-  ref,
+  ref: React.MutableRefObject<any>,
   toggle: React.Dispatch<React.SetStateAction<boolean>>,
   ignoredClass: string
 ) {
@@ -37,11 +37,7 @@ function useOutsideAlerter(
         console.log("You clicked outside of me!");
         toggle(false);
       }
-      console.log(
-        event.target,
-        event.target.parentElement,
-        event.target.firstChild
-      );
+    
     }
 
     // Bind the event listener
@@ -72,8 +68,8 @@ interface Props {
   children?: Element | null;
   suggsestions?: boolean;
   className?: string;
-  extraWidth?: string;
-  counter?: number;
+  // dosent hide the emoji picker if 
+  // clicked element has this class
   ignoredClass?: string;
 }
 
@@ -85,32 +81,29 @@ const EmojiInput = ({
   label = "",
   suggsestions = false,
   className = "",
-  counter = 1,
   ignoredClass = "none",
 }: Props) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const x = useRef(null);
-  const d = useRef(null);
-
+  const container = useRef(null);
+  // TODO ADD AUTO FOCUS ON INPUT
   useEffect(() => {
-    console.log(d, counter);
-    if (x.current) {
+    if (container.current) {
       console.log("fiered");
       setShowEmojiPicker(true);
-      x.current.focus();
+      // dosnet workd :( 
+        container.current.focus();
     }
-  }, [counter]);
+  }, []);
 
   const classes = useStyles();
 
-  useOutsideAlerter(x, setShowEmojiPicker, ignoredClass);
+  useOutsideAlerter(container, setShowEmojiPicker, ignoredClass);
 
   return (
     <Grid
       item
-      ref={x}
+      ref={container}
       onFocus={() => {
-        console.log("focused");
         setShowEmojiPicker(true);
       }}
       className={`${classes.root} ${className}`}
@@ -123,7 +116,6 @@ const EmojiInput = ({
             </InputLabel>
           ) : null}
           <FilledInput
-            ref={d}
             inputProps={{ autoComplete: "off" }}
             name={label}
             type="text"
@@ -134,10 +126,13 @@ const EmojiInput = ({
       ) : (
         children
       )}
+
       {showEmojiPicker ? (
         <PureEmojiInput text={text} setText={setText} abs={abs} />
       ) : null}
+
       {suggsestions && showEmojiPicker ? <HeaderOptions text={text} /> : null}
+
     </Grid>
   );
 };

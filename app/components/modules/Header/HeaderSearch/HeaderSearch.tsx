@@ -51,7 +51,6 @@ const useStyles = makeStyles((theme: Theme) =>
         height: "3.5rem",
       },
     },
-    openButton: {},
     showInput: {
       width: "55vw",
       maxWidth: "320px",
@@ -74,21 +73,24 @@ interface Props {
 const HeaderSearch = ({ text, setText, className = "" }: Props) => {
   const classes = useStyles();
   const [showSearch, setShowSearch] = useState(false);
-  const [counter, setCounter] = useState(1);
+  // const [counter, setCounter] = useState(1);
   const ignoredClass = "header";
   return (
-    <div className={`${classes.search}   ${className} ${ignoredClass} ${showSearch ? "" : ""}`}>
+    <div
+      className={`${classes.search}   ${className} ${ignoredClass} ${
+        showSearch ? "" : ""
+      }`}
+    >
       <IconButton
-        aria-label="delete"
+        aria-label="show search"
         onClick={(e) => {
           setShowSearch(!showSearch);
-          setCounter(counter + 1);
+          // can be removed
+          // setCounter(counter + 1);
         }}
-        className={`${classes.abosluteButton} showMobile ${ignoredClass} ${
-          showSearch ? classes.openButton : ""
-        }`}
+        className={`${classes.abosluteButton} showMobile ${ignoredClass}`}
       >
-        <SearchIcon  className={ignoredClass}/>
+        <SearchIcon className={ignoredClass} />
       </IconButton>
       <EmojiInput
         text={text}
@@ -99,7 +101,6 @@ const HeaderSearch = ({ text, setText, className = "" }: Props) => {
         className={`${
           showSearch ? classes.showInput : classes.hideInput
         } showMobile`}
-        counter={counter}
         ignoredClass={ignoredClass}
       />
 
