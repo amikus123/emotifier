@@ -80,19 +80,20 @@ function MyApp({ Component, pageProps }: AppProps) {
     // useChangeUserStoreData()
     const auth = getAuth();
 
-    const init = async () => {
-      try {
-        await setPersistence(auth, browserLocalPersistence);
-        console.log("persistance set")
-        console.log(auth.currentUser, "user")
-      } catch (err) {
-        console.error("Auth initialization error: ", err);
-      }
-    };
+  
 
     useEffect(() => {
+      const init = async () => {
+        try {
+          await setPersistence(auth, browserLocalPersistence);
+          console.log("persistance set")
+          console.log(auth.currentUser, "user")
+        } catch (err) {
+          console.error("Auth initialization error: ", err);
+        }
+      };
       init();
-    }, []);
+    }, [auth]);
 
     return (
       <>
