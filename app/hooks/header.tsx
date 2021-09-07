@@ -11,17 +11,20 @@ const useHeaderOutsideClick = (
       let first = false;
       let second = false;
       const target = event.target;
-      console.log(target)
+      console.log(target,target.parentElement)
       try {
         if (target.firstChild) {
           first = target.firstChild.classList.contains(ignoredClass);
+          console.log(target.firstChild.classList)
         }
       } catch (e) {
         console.error(e);
       }
       try {
-        if (target.partentElement) {
-          second = target.partentElement.classList.contains(ignoredClass);
+        if (target.parentElement) {
+          second = target.parentElement.classList.contains(ignoredClass);
+          console.log(target.parentElement.classList)
+
         }
       } catch (e) {
         console.error(e);
@@ -29,6 +32,7 @@ const useHeaderOutsideClick = (
 
       if (
         ref.current &&
+      
          state &&
         !ref.current.contains(event.target) &&
         !(event.target.classList.contains(ignoredClass) || first || second)
