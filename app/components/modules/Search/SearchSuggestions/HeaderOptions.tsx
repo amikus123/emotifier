@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: "purple",
       transform: "translateX(100%)",
       zIndex: theme.zIndex.drawer + 2,
-      left: "8px",
+      right: "-8px",
       top: "0",
     },
   })
