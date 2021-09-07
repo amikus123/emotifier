@@ -1,10 +1,8 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import {
   makeStyles,
   Theme,
   createStyles,
-  alpha,
-  IconButton,
 } from "@material-ui/core";
 import EmojiInput from "../../../elements/Inputs/EmojiInput/EmojiInput";
 import SelfClosingEmojiInput from "../../../elements/Inputs/EmojiInput/SelfClosingEmojiInput";
@@ -19,35 +17,14 @@ const useStyles = makeStyles((theme: Theme) =>
       transition: "all 0.5s",
       maxWidth: "320px",
       width: "min-content",
+      marginTop:"4px",
+
       [theme.breakpoints.up("sm")]: {
         marginLeft: theme.spacing(3),
       },
     },
-    searchIcon: {
-      padding: theme.spacing(0, 2),
-      height: "100%",
-      position: "absolute",
-      pointerEvents: "none",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    aboslute: {
-      position: "absolute",
-      left: "3.5rem",
-      display: "flex",
-    },
-    abosluteButton: {
-      width: "2rem",
-      height: "2rem",
-      padding: "0",
-      marginRight: "0.5rem",
+   
 
-      [theme.breakpoints.up("sm")]: {
-        width: "3.5rem",
-        height: "3.5rem",
-      },
-    },
     showInput: {
       width: "55vw",
       maxWidth: "320px",

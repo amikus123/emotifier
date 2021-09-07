@@ -77,7 +77,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     //   setTheme({ ...theme, ...getThemeFromString(themeString) });
     // }, [themeString]);
     
-    // useChangeUserStoreData()
+    useChangeUserStoreData()
     const auth = getAuth();
 
   
