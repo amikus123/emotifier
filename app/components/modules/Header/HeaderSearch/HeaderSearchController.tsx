@@ -9,13 +9,12 @@ const HeaderSearchController = ({ text, setText }: Props) => {
   return (
     <>
       <HeaderSearch text={text} setText={setText} className="showDesktop" />
-
       <HeaderSearch
-        abs={false}
         text={text}
         setText={setText}
         className="hideDesktop"
       />
+
     </>
   );
 };

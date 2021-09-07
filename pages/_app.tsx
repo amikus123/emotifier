@@ -76,7 +76,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     // useEffect(() => {
     //   setTheme({ ...theme, ...getThemeFromString(themeString) });
     // }, [themeString]);
-    useChangeUserStoreData()
+    
+    // useChangeUserStoreData()
     const auth = getAuth();
 
     const init = async () => {

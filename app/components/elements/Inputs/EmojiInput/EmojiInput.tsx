@@ -9,55 +9,24 @@ import {
   OutlinedInput,
 } from "@material-ui/core";
 import React, { useEffect, useRef, useState } from "react";
+import { useHeaderOutsideClick } from "../../../../hooks/header";
 import { allowEmojisAndDeleting } from "../../../../utils/forms/emojiInputs";
 import { capitalize } from "../../../../utils/general/stringManipulation";
 import HeaderOptions from "../../../modules/Search/SearchSuggestions/HeaderOptions";
 import PureEmojiInput from "../EmojiPicker/EmojiPicker";
-
-function useOutsideAlerter(
-  ref: React.MutableRefObject<any>,
-  toggle: React.Dispatch<React.SetStateAction<boolean>>,
-  ignoredClass: string
-) {
-  useEffect(() => {
-    function handleClickOutside(event) {
-      let first = false;
-      let second = false;
-      const target = event.target;
-      if (target.firstChild) {
-        first = target.firstChild.classList.contains(ignoredClass);
-      }
-      if (target.partentElement) {
-        second = target.partentElement.classList.contains(ignoredClass);
-      }
-      if (
-        ref.current &&
-        !ref.current.contains(event.target) &&
-        !(event.target.classList.contains(ignoredClass) || first || second)
-      ) {
-        console.log("You clicked outside of me!");
-        toggle(false);
-      }
-    }
-
-    // Bind the event listener
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, [ref, toggle, ignoredClass]);
-}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       position: "relative",
     },
-
-    notchedOutline: {
-      backgroundColor: "#fff",
-      borderColor: "rgba(0, 0, 0, 0.23)!important",
+    input: {
+      background: theme.palette.common.white,
+    },
+    focused: {
+      "& >  .MuiOutlinedInput-notchedOutline": {
+        borderColor: `${theme.palette.common.black}!important`,
+      },
     },
   })
 );
@@ -65,30 +34,25 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   setText: (e: string) => void;
   text: string;
-  label?: string;
+  label: string;
   abs?: boolean;
   children?: Element | null;
   suggsestions?: boolean;
   className?: string;
   // dosent hide the emoji picker if
   // clicked element has this class
-  ignoredClass?: string;
   outlined?: boolean;
-}
-const settings = {
-
 }
 
 const EmojiInput = ({
   setText,
   text,
+  label,
   abs = false,
   children = null,
   suggsestions = false,
   outlined = false,
-  label = "",
   className = "",
-  ignoredClass = "none",
 }: Props) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const container = useRef(null);
@@ -104,7 +68,7 @@ const EmojiInput = ({
 
   const classes = useStyles();
 
-  useOutsideAlerter(container, setShowEmojiPicker, ignoredClass);
+  useHeaderOutsideClick(container, setShowEmojiPicker,showEmojiPicker);
 
   return (
     <Grid
@@ -131,7 +95,8 @@ const EmojiInput = ({
               value={text}
               onChange={allowEmojisAndDeleting(setText)}
               classes={{
-                notchedOutline: classes.notchedOutline,
+                root: classes.input,
+                focused: classes.focused,
               }}
             />
           ) : (

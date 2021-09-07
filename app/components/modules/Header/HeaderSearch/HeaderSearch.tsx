@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import SearchIcon from "@material-ui/icons/Search";
 import {
   makeStyles,
   Theme,
@@ -64,17 +63,15 @@ interface Props {
 const HeaderSearch = ({ text, setText, className = "" }: Props) => {
   const classes = useStyles();
   // const [counter, setCounter] = useState(1);
-  const ignoredClass = "header";
   return (
     <div
-      className={`${classes.search}   ${className} ${ignoredClass}`}
+      className={`${classes.search}   ${className}`}
     >
       <SelfClosingEmojiInput
         text={text}
         setText={setText}
         label="Search"
         className={`showMobile`}
-        ignoredClass={ignoredClass}
       />
 
       <EmojiInput
@@ -84,7 +81,6 @@ const HeaderSearch = ({ text, setText, className = "" }: Props) => {
         label="Search"
         suggsestions={true}
         className={`${classes.showInput} hideMobile`}
-        ignoredClass={ignoredClass}
         outlined={true}
       />
     </div>
