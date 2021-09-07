@@ -9,7 +9,7 @@ import {
   OutlinedInput,
 } from "@material-ui/core";
 import React, { useEffect, useRef, useState } from "react";
-import { useHeaderOutsideClick } from "../../../../hooks/header";
+import  useHeaderOutsideClick  from "../../../../hooks/header";
 import { allowEmojisAndDeleting } from "../../../../utils/forms/emojiInputs";
 import { capitalize } from "../../../../utils/general/stringManipulation";
 import HeaderOptions from "../../../modules/Search/SearchSuggestions/HeaderOptions";
