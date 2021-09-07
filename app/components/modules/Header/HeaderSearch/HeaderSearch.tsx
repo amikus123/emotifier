@@ -8,6 +8,7 @@ import {
   IconButton,
 } from "@material-ui/core";
 import EmojiInput from "../../../elements/Inputs/EmojiInput/EmojiInput";
+import SelfClosingEmojiInput from "../../../elements/Inputs/EmojiInput/SelfClosingEmojiInput";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,10 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "2rem",
       padding: "0",
       marginRight: "0.5rem",
-      backgroundColor: alpha(theme.palette.common.white, 1),
-      "&:hover": {
-        backgroundColor: alpha(theme.palette.common.white, 1),
-      },
+
       [theme.breakpoints.up("sm")]: {
         width: "3.5rem",
         height: "3.5rem",
@@ -54,15 +52,8 @@ const useStyles = makeStyles((theme: Theme) =>
     showInput: {
       width: "55vw",
       maxWidth: "320px",
-      backgroundColor: alpha(theme.palette.common.white, 1),
-      "&:hover": {
-        backgroundColor: alpha(theme.palette.common.white, 0.9),
-      },
     },
-    hideInput: {
-      width: "0vw!important",
-      overflow: "hidden",
-    },
+  
   })
 );
 interface Props {
@@ -72,35 +63,17 @@ interface Props {
 }
 const HeaderSearch = ({ text, setText, className = "" }: Props) => {
   const classes = useStyles();
-  const [showSearch, setShowSearch] = useState(false);
   // const [counter, setCounter] = useState(1);
   const ignoredClass = "header";
   return (
     <div
-      className={`${classes.search}   ${className} ${ignoredClass} ${
-        showSearch ? "" : ""
-      }`}
+      className={`${classes.search}   ${className} ${ignoredClass}`}
     >
-      <IconButton
-        aria-label="show search"
-        onClick={(e) => {
-          setShowSearch(!showSearch);
-          // can be removed
-          // setCounter(counter + 1);
-        }}
-        className={`${classes.abosluteButton} showMobile ${ignoredClass}`}
-      >
-        <SearchIcon className={ignoredClass} />
-      </IconButton>
-      <EmojiInput
+      <SelfClosingEmojiInput
         text={text}
         setText={setText}
-        abs={true}
         label="Search"
-        suggsestions={true}
-        className={`${
-          showSearch ? classes.showInput : classes.hideInput
-        } showMobile`}
+        className={`showMobile`}
         ignoredClass={ignoredClass}
       />
 
@@ -112,6 +85,7 @@ const HeaderSearch = ({ text, setText, className = "" }: Props) => {
         suggsestions={true}
         className={`${classes.showInput} hideMobile`}
         ignoredClass={ignoredClass}
+        outlined={true}
       />
     </div>
   );

@@ -20,37 +20,37 @@ const dark = createTheme({
     MuiCssBaseline: {
       "@global": {
         body: {
-          backgroundColor: "#0f0a05",
+          // backgroundColor: "#0f0a05",
         },
         a: {
           textDecoration: "none",
-          color: "#1B95E0",
+          // color: "#1B95E0",
         },
       },
     },
   },
 
-  palette: {
-    primary: {
-      main: "#1B95E0",
-    },
-    secondary: {
-      main: "#AA2200",
-    },
-    neutralColor:{
-      main:"#e0e0e0"
-    },
-    textInputBG: {
-      main: "#0f0a05",
-    },
-    background: {
-      paper: "#0f0a05",
-      default: "#0f0a05",
-    },
-    text: {
-      primary: "#FFFFFF",
-    },
-  },
+  // palette: {
+  //   primary: {
+  //     main: "#1B95E0",
+  //   },
+  //   secondary: {
+  //     main: "#AA2200",
+  //   },
+  //   neutralColor:{
+  //     main:"#e0e0e0"
+  //   },
+  //   textInputBG: {
+  //     main: "#0f0a05",
+  //   },
+  //   background: {
+  //     paper: "#0f0a05",
+  //     default: "#0f0a05",
+  //   },
+  //   text: {
+  //     primary: "#FFFFFF",
+  //   },
+  // },
   breakpoints: {
     values: {
       xs: 0,
@@ -67,37 +67,37 @@ const light = createTheme({
     MuiCssBaseline: {
       "@global": {
         body: {
-          backgroundColor: "#ffefff",
+          // backgroundColor: "#ffefff",
         },
         a: {
           textDecoration: "none",
-          color: "#AA2200",
+          // color: "#AA2200",
         },
       },
     },
   },
 
-  palette: {
-    primary: {
-      main: "#AA2200",
-    },
-    secondary: {
-      main: "#1B95E0",
-    },
-    textInputBG: {
-      main: "#0f0a05",
-    },
-    neutralColor:{
-      main:"#e0e0e0"
-    },
-    background: {
-      paper: "#fff",
-      default: "#fff",
-    },
-    text: {
-      primary: "#0D1821",
-    },
-  },
+  // palette: {
+  //   primary: {
+  //     main: "#AA2200",
+  //   },
+  //   secondary: {
+  //     main: "#1B95E0",
+  //   },
+  //   textInputBG: {
+  //     main: "#0f0a05",
+  //   },
+  //   neutralColor:{
+  //     main:"#e0e0e0"
+  //   },
+  //   background: {
+  //     paper: "#fff",
+  //     default: "#fff",
+  //   },
+  //   text: {
+  //     primary: "#0D1821",
+  //   },
+  // },
   breakpoints: {
     values: {
       xs: 0,
