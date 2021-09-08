@@ -2,6 +2,7 @@ export interface EmailRegisterFormValues {
   username: string;
   email: string;
   password: string;
+  profilePic:string
 }
 
 export interface EmailLoginFormValues {

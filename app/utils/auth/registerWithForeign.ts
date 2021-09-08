@@ -18,7 +18,7 @@ console.log(auth.currentUser);
 
 
 
-export const loginWithGoogle = async (nickname: string = "") => {
+export const loginWithGoogle = async (nickname: string,profilePic:string) => {
   const provider = new GoogleAuthProvider();
 
   try {
@@ -30,7 +30,7 @@ export const loginWithGoogle = async (nickname: string = "") => {
     console.log("logged with external");
 
     if (dbData === null && nickname !== "") {
-      await writeUserData(nickname, user.email, user.uid);
+      await writeUserData(nickname, user.email, user.uid,profilePic);
       console.log(nickname, "nick");
       console.log(auth.currentUser, "registered");
 
@@ -52,7 +52,7 @@ export const loginWithGoogle = async (nickname: string = "") => {
   }
 };
 
-export const loginWithFacebook = async (nickname: string = "") => {
+export const loginWithFacebook = async (nickname: string,profilePic:string) => {
   const provider = new FacebookAuthProvider();
 
   try {
@@ -64,7 +64,7 @@ export const loginWithFacebook = async (nickname: string = "") => {
     console.log("logged with external");
 
     if (dbData === null && nickname !== "") {
-      await writeUserData(nickname, user.email, user.uid);
+      await writeUserData(nickname, user.email, user.uid,profilePic);
       console.log(nickname, "nick");
       console.log(auth.currentUser, "registered");
 

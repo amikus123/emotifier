@@ -14,19 +14,25 @@ export const registerWithEmail = async ({
   username,
   email,
   password,
+  profilePic
 }: EmailRegisterFormValues) => {
   try {
     const auth = getAuth();
 
     console.log("registerWithEmailAndPassword");
+    console.log(  username,
+      email,
+      password,
+      profilePic);
+    
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
     const user = userCredential.user;
-    await addEmojiUsername(username, user.uid);
-    await writeUserData(username, email, user.uid);
+
+    await writeUserData(username, email, user.uid,profilePic);
     console.log(user, "udalo sie");
   } catch (e) {
     const errorCode = e.code;

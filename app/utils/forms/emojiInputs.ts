@@ -18,3 +18,6 @@ export const allowEmojisAndDeleting = (setText: (arg0: any) => any) => {
   };
   return res;
 };
+
+
+

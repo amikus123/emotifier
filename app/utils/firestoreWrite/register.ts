@@ -8,10 +8,10 @@ import { db } from "../../../pages/_app";
 export const writeUserData = async (
   username: string,
   email: string,
-  userId: string
+  userId: string,
+  profilePic:string
 ) => {
   const docRef = doc(db, "users", userId);
-  const docSnap = await getDoc(docRef);
 
 
   
@@ -19,6 +19,7 @@ export const writeUserData = async (
       username,
       email,
       userId,
+      profilePic
     });
     
 

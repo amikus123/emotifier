@@ -21,6 +21,7 @@
     "firebase": "^9.0.0-beta.7",
     "grapheme-splitter": "^1.0.4",
     "is-emoji-keyword": "^1.0.1",
+    "material-ui-image": "^3.3.2",
     "next": "11.1.0",
     "next-redux-wrapper": "^7.0.4",
     "node-emoji": "^1.11.0",

@@ -3,7 +3,7 @@ import { useEffect } from "react";
 const useHeaderOutsideClick = (
   ref: React.MutableRefObject<any>,
   toggle: React.Dispatch<React.SetStateAction<boolean>>,
-  state:boolean,
+  state: boolean,
   ignoredClass?: string
 ) => {
   useEffect(() => {
@@ -11,11 +11,9 @@ const useHeaderOutsideClick = (
       let first = false;
       let second = false;
       const target = event.target;
-      console.log(target,target.parentElement)
       try {
         if (target.firstChild) {
           first = target.firstChild.classList.contains(ignoredClass);
-          console.log(target.firstChild.classList)
         }
       } catch (e) {
         console.error(e);
@@ -23,8 +21,6 @@ const useHeaderOutsideClick = (
       try {
         if (target.parentElement) {
           second = target.parentElement.classList.contains(ignoredClass);
-          console.log(target.parentElement.classList)
-
         }
       } catch (e) {
         console.error(e);
@@ -32,15 +28,14 @@ const useHeaderOutsideClick = (
 
       if (
         ref.current &&
-      
-         state &&
+        state &&
         !ref.current.contains(event.target) &&
         !(event.target.classList.contains(ignoredClass) || first || second)
       ) {
-        console.log("You clicked outside of me!");
-        toggle(false);
-      }else{
-        console.log("failed")
+        setTimeout(() => {
+          toggle(false);
+        }, 1);
+      } else {
       }
     }
 
@@ -50,6 +45,6 @@ const useHeaderOutsideClick = (
       // Unbind the event listener on clean up
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [ref, toggle,state, ignoredClass]);
+  }, [ref, toggle, state, ignoredClass]);
 };
-export default useHeaderOutsideClick
+export default useHeaderOutsideClick;

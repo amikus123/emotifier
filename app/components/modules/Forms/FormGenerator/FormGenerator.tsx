@@ -6,12 +6,14 @@ import PasswordInput from "../../../elements/Inputs/PasswordInput/PasswordInput"
 import EmojiInput from "../../../elements/Inputs/EmojiInput/EmojiInput";
 import { makeStyles, Theme, createStyles } from "@material-ui/core";
 import { useRouter } from "next/router";
+import ProfilePicSelector from "../../../elements/Inputs/ProfilePicSelector/ProfilePicSelector";
 
 const options = {
   emailLogin: {
     defaultValues: {
       email: "",
       password: "",
+      profilePic: null,
       username: null,
     },
   },
@@ -20,11 +22,13 @@ const options = {
       username: "",
       email: "",
       password: "",
+      profilePic: "",
     },
   },
   usernameInput: {
     defaultValues: {
       username: "",
+      profilePic: "",
       password: null,
       email: null,
     },
@@ -78,7 +82,7 @@ const FormGenerator = ({ handleSubmit, type }: Props) => {
       <Grid
         container
         alignItems="center"
-        justify="center"
+        justifyContent="center"
         direction="column"
         className={classes.root}
       >
@@ -101,6 +105,13 @@ const FormGenerator = ({ handleSubmit, type }: Props) => {
           <PasswordInput
             setPassword={handleGenerator("password")}
             password={formValues.password}
+          />
+        ) : null}
+        {formValues.profilePic !== null ? (
+          <ProfilePicSelector
+            setText={handleGenerator("profilePic")}
+            text={formValues.profilePic}
+            label="nick"
           />
         ) : null}
 
