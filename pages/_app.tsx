@@ -2,29 +2,23 @@ import type { AppProps } from "next/app";
 import React, { useEffect, useState } from "react";
 import { initializeApp } from "firebase/app";
 import { Provider, useSelector } from "react-redux";
-import store from "../app/store/store";
+import store, {  wrapper } from "../app/store/store";
 import { getFirestore } from "firebase/firestore";
 import { getThemeFromString } from "../app/constans/themeConfig";
-import { selectTheme } from "../app/store/features/theme/themeSlice";
 import { CssBaseline, ThemeProvider } from "@material-ui/core";
 // pollyfill for replace all string method
 import replaceAllInserter from "string.prototype.replaceall";
 // alows for stacking snackabrs
 import { SnackbarProvider } from "notistack";
-
 import { setTheme } from "../app/utils/theme/setTheme";
 // css for emoji mart emoji picker
 import "emoji-mart/css/emoji-mart.css";
-import {
-  shouldRedirectLogged,
-  useRedirectUserIfNecessary,
-} from "../app/hooks/redirecting";
+
 import { useRouter } from "next/router";
 import {
   browserLocalPersistence,
   getAuth,
   setPersistence,
-  signOut,
 } from "firebase/auth";
 
 import "../style.css"
@@ -51,6 +45,10 @@ try {
 }
 export const db = getFirestore();
 
+
+
+
+
 function MyApp({ Component, pageProps }: AppProps) {
   // prevents flickering, might remove it
   // enable for production, forces user to input his name if it missing
@@ -70,18 +68,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   
   const InnerContent = () => {
     const [theme, setTheme] = useState(getThemeFromString("light"));
-    const themeString = useSelector(selectTheme);
-    // this should be enabled for production, forces user to redirect
-    // useRedirectUserIfNecessary()
-    // useEffect(() => {
-    //   setTheme({ ...theme, ...getThemeFromString(themeString) });
-    // }, [themeString]);
-    
+
     useChangeUserStoreData()
     const auth = getAuth();
-
-  
-
     useEffect(() => {
       const init = async () => {
         try {
@@ -106,8 +95,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           <SnackbarProvider maxSnack={5}>
             <CssBaseline />
             <Component {...pageProps} />
-            {/* <button style={{position:"absolute",zIndex:10000,}} onClick={()=>{signOut(auth)}}>log out</button> */}
-
           </SnackbarProvider>
         </ThemeProvider>
       </>
@@ -115,12 +102,18 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
 
   return (
+
     <Provider store={store}>
             <InnerContent />
-    </Provider>
+     </Provider>
+
   );
 }
-export default MyApp;
+export default wrapper.withRedux(MyApp);
+
+
+
+
 
 // import { useSnackbar } from 'notistack';
 
