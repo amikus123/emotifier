@@ -1,13 +1,10 @@
-import { combineReducers, configureStore, createStore } from '@reduxjs/toolkit'
+import { Action, combineReducers, configureStore, createStore, ThunkAction } from '@reduxjs/toolkit'
 import { createWrapper } from 'next-redux-wrapper'
 
 import themeReducer from './features/theme/themeSlice'
 import userReducer from './features/user/userSlice'
 
 
-const rootReducer = combineReducers({
-  theme: themeReducer,
-  user:userReducer})
 
 export const store = 
  configureStore({
@@ -17,10 +14,16 @@ export const store =
   }
 })
 
-export const makeStore = () => createStore(rootReducer)
 
-export const wrapper = createWrapper(makeStore)
 
 export default store
 
-export type RootState = ReturnType<typeof makeStore>
+
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppThunk<ReturnType = void> = ThunkAction<
+   ReturnType,
+   RootState,
+   unknown,
+   Action<string>
+ >;

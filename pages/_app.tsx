@@ -2,7 +2,7 @@ import type { AppProps } from "next/app";
 import React, { useEffect, useState } from "react";
 import { initializeApp } from "firebase/app";
 import { Provider, useSelector } from "react-redux";
-import store, {  wrapper } from "../app/store/store";
+import store from "../app/store/store";
 import { getFirestore } from "firebase/firestore";
 import { getThemeFromString } from "../app/constans/themeConfig";
 import { CssBaseline, ThemeProvider } from "@material-ui/core";
@@ -109,7 +109,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   );
 }
-export default wrapper.withRedux(MyApp);
+export default MyApp;
 
 
 
