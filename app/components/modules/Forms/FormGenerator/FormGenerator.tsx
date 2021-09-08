@@ -111,7 +111,6 @@ const FormGenerator = ({ handleSubmit, type }: Props) => {
           <ProfilePicSelector
             setText={handleGenerator("profilePic")}
             text={formValues.profilePic}
-            label="nick"
           />
         ) : null}
 

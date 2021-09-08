@@ -2,7 +2,8 @@ import { Picker } from "emoji-mart";
 import React from "react";
 
 // this component is used with other inputs to allow user to
-// enter emojis withouth special keyboard
+// enter emojis wihtouth special keyboard
+// add emoji based where the input element is 
 interface Props {
   text: string;
   setText?: (e: string) => void;
@@ -33,7 +34,10 @@ const EmojiPicker = ({
             }
       }
       set="twitter"
-      title="Select emoji"
+      title=""
+      emoji="rainbow"
+      showPreview={false}
+      emojiTooltip={true}
       onClick={(e: any) => {
         if (e.native !== undefined) {
           console.log(e, "halo");

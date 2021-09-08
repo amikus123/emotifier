@@ -1,14 +1,10 @@
-import {
-  Grid,
-  createStyles,
-  makeStyles,
-  Theme,
-} from "@material-ui/core";
+import { Grid, createStyles, makeStyles, Theme } from "@material-ui/core";
 import React, { useEffect, useRef, useState } from "react";
 import useHeaderOutsideClick from "../../../../hooks/header";
 import EmojiPicker from "../EmojiPicker/EmojiPicker";
-import { getStorage, ref, getDownloadURL  } from "firebase/storage";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import Image from "material-ui-image";
+import { useSnackbar } from "notistack";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -19,33 +15,20 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-const storage = getStorage();
 
 interface Props {
   setText: (e: string) => void;
   text: string;
-  label: string;
-  abs?: boolean;
-  children?: Element | null;
-  suggsestions?: boolean;
   className?: string;
-  // dosent hide the emoji picker if
-  // clicked element has this class
-  outlined?: boolean;
 }
-const baseEmoji = "1f920"
-const ProfilePicSelector = ({
-  setText,
-  text,
-  label,
-  abs = false,
-  outlined = false,
-  className = "",
-}: Props) => {
+const ProfilePicSelector = ({ setText, text, className = "" }: Props) => {
+  const baseEmoji = "1f920";
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [unicode, setUnicode] = useState(baseEmoji);
+
   const container = useRef(null);
-  // TODO ADD AUTO FOCUS ON INPUT
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   useEffect(() => {
     if (container.current) {
       setShowEmojiPicker(true);
@@ -61,17 +44,22 @@ const ProfilePicSelector = ({
 
   useEffect(() => {
     const getImage = async (passedUnicode: string) => {
-          try {
+      try {
         const a = await getDownloadURL(
           ref(storage, `profilePictures/${passedUnicode}.svg`)
         );
         setText(a);
       } catch (e) {
         console.error(e);
+        enqueueSnackbar("You can't pick this emoji 🙁", {
+          variant: "error",
+        });
+        // setUnicode("");
       }
     };
-
-    getImage(unicode);
+    if (unicode !== "") {
+      getImage(unicode);
+    }
   }, [unicode]);
   return (
     <Grid
@@ -100,7 +88,12 @@ const ProfilePicSelector = ({
         />
       ) : null}
 
-      <EmojiPicker text={text} setText={setUnicode} abs={abs} unicode={true} />
+      <EmojiPicker
+        text={text}
+        setText={setUnicode}
+        abs={false}
+        unicode={true}
+      />
     </Grid>
   );
 };

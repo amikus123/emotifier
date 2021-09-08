@@ -92,7 +92,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           charSet="utf-8"
         />
         <ThemeProvider theme={theme}>
-          <SnackbarProvider maxSnack={5}>
+        
+          <SnackbarProvider maxSnack={5} preventDuplicate >
             <CssBaseline />
             <Component {...pageProps} />
           </SnackbarProvider>
