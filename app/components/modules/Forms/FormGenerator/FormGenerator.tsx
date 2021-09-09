@@ -68,9 +68,10 @@ const FormGenerator = ({ handleSubmit, type }: Props) => {
     <form
       onSubmit={async (e) => {
         console.log("submited");
+        console.log(formValues,"form c")
         e.preventDefault();
         if (type === "usernameInput") {
-          const res = await handleSubmit(formValues.username);
+          const res = await handleSubmit(formValues);
           if (res === "registered") {
             router.push("/feed");
           }

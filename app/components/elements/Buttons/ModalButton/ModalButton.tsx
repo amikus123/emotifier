@@ -17,26 +17,34 @@ import {
 } from "../../../../utils/auth/register";
 import { Link } from "@material-ui/core";
 import FormGenerator from "../../../modules/Forms/FormGenerator/FormGenerator";
-
+import { addEmojiUsername } from "../../../../utils/firestoreWrite/register";
 
 const options = {
   google: {
     handleSubmit: loginWithGoogle,
+    modal: addEmojiUsername,
     icon: googleLogo,
     dialogTitle: "First enter your emoji nick",
   },
   facebook: {
     handleSubmit: loginWithFacebook,
+    modal: addEmojiUsername,
+
     icon: facebookLogo,
     dialogTitle: "First enter your emoji nick",
   },
   email: {
     handleSubmit: registerWithEmail,
     dialogTitle: "Register",
-
+    modal: () => {
+      throw new Error("shouldnt fire");
+    },
     icon: gmailLogo,
   },
   login: {
+    modal: () => {
+      throw new Error("shouldnt fire");
+    },
     dialogTitle: "Login",
     handleSubmit: loginWithEmail,
   },
@@ -50,6 +58,7 @@ interface Props {
 
 export const ModalButton = ({ name, children }: Props) => {
   const [open, setOpen] = React.useState(false);
+
   const handleClickOpen = async () => {
     if (name === "facebook" || name === "google") {
       const res = await options[name].handleSubmit();
@@ -74,14 +83,14 @@ export const ModalButton = ({ name, children }: Props) => {
         return (
           <FormGenerator
             type="usernameInput"
-            handleSubmit={options[name].handleSubmit}
+            handleSubmit={options[name].modal}
           />
         );
       case "facebook":
         return (
           <FormGenerator
             type="usernameInput"
-            handleSubmit={options[name].handleSubmit}
+            handleSubmit={options[name].modal}
           />
         );
       case "login":
