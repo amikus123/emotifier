@@ -41,19 +41,7 @@ export const registerWithEmail = async ({
   }
 };
 
-export const addUsername = async (username: string) => {
-  try {
-    const auth = getAuth();
-    const user = auth.currentUser;
 
-    await addEmojiUsername(username, user.uid);
-    console.log("updated nick");
-  } catch (e) {
-    const errorCode = e.code;
-    const errorMessage = e.message;
-    console.error(errorCode, errorMessage);
-  }
-};
 export const loginWithEmail = async ({
   email,
   password,
