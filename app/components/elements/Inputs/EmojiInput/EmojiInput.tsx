@@ -16,14 +16,12 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       position: "relative",
+      borderRadius: theme.shape.borderRadius,
     },
     input: {
       background: theme.palette.common.white,
-    },
-    focused: {
-      "& >  .MuiOutlinedInput-notchedOutline": {
-        borderColor: `${theme.palette.common.black}!important`,
-      },
+      borderRadius: theme.shape.borderRadius,
+      
     },
   })
 );
@@ -33,6 +31,7 @@ interface Props {
   text: string;
   label?: string;
   abs?: boolean;
+  size?: "medium" | "small";
   suggsestions?: boolean;
   className?: string;
   outlined?: boolean;
@@ -50,6 +49,7 @@ const EmojiInput = ({
   outlined = false,
   className = "",
   errorText = "",
+  size = "medium",
   helperText = "",
   resetErrorText,
 }: Props) => {
@@ -69,6 +69,7 @@ const EmojiInput = ({
       className={`${classes.root} ${className}`}
     >
       <TextField
+        size={size}
         error={!!errorText}
         fullWidth={true}
         inputProps={{ autoComplete: "off" }}

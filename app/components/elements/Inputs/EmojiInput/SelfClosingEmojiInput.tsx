@@ -1,11 +1,11 @@
 import {
   Grid,
-  FormControl,
   createStyles,
   makeStyles,
   Theme,
-  OutlinedInput,
   InputAdornment,
+  capitalize,
+  TextField,
 } from "@material-ui/core";
 import React, { useEffect, useRef, useState } from "react";
 import { allowEmojisAndDeleting } from "../../../../utils/forms/emojiInputs";
@@ -22,9 +22,18 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       justifyContent: "flex-start",
       alignItems: "flex-start",
+      borderRadius: theme.shape.borderRadius,
+
     },
     input: {
+      borderRadius: theme.shape.borderRadius,
       background: theme.palette.common.white,
+      "&:focus": {
+        "& >  .MuiOutlinedInput-notchedOutline": {
+          borderColor: `${theme.palette.common.black}!important`,
+          display: "none",
+        },
+      },
     },
     button: {
       cursor: "pointer",
@@ -32,7 +41,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     closeButton: {
-      color: theme.palette.error.main,
+      color: theme.palette.primary.main,
+      
     },
 
     fullWidth: {
@@ -68,9 +78,14 @@ const SelfClosingEmojiInput = ({
   // TODO ADD AUTO FOCUS ON INPUT
 
   const classes = useStyles();
-  useHeaderOutsideClick(container, setShowEmojiPicker,showEmojiPicker, ignoredClass);
+  useHeaderOutsideClick(
+    container,
+    setShowEmojiPicker,
+    showEmojiPicker,
+    ignoredClass
+  );
   const toggleSearch = (e) => {
-    console.log("CLICIKDE BUTTON")
+    console.log("CLICIKDE BUTTON");
     setShowEmojiPicker(!showEmojiPicker);
   };
 
@@ -83,22 +98,13 @@ const SelfClosingEmojiInput = ({
       }}
       className={`${classes.root} ${className}`}
     >
-      <FormControl variant="filled" fullWidth={true}>
-        <OutlinedInput
-          fullWidth={true}
-          inputProps={{ autoComplete: "off" }}
-          name={label}
-          type="text"
-          value={text}
-          onChange={allowEmojisAndDeleting(setText)}
-          classes={{
-            root: `${classes.input} ${
-              showEmojiPicker ? classes.fullWidth : classes.short
-            }`,
-            focused: classes.focused,
-          }}
-          color="secondary"
-          startAdornment={
+      <TextField
+        fullWidth={true}
+        inputProps={{
+          autoComplete: "off",
+        }}
+        InputProps={{
+          startAdornment: (
             <InputAdornment
               position="start"
               onClick={toggleSearch}
@@ -109,22 +115,53 @@ const SelfClosingEmojiInput = ({
                   className={`${ignoredClass} ${classes.closeButton} `}
                 />
               ) : (
-                <SearchIcon className={ignoredClass} />
+                <SearchIcon
+                  className={`${ignoredClass} ${classes.closeButton}`}
+                />
               )}
             </InputAdornment>
-          }
-        />
-      </FormControl>
+          ),
+        }}
+        name={label}
+        type="text"
+        value={text}
+        color="secondary"
+        label=""
+        onChange={() => {
+          allowEmojisAndDeleting(setText);
+        }}
+        classes={{
+          root: `${classes.input} ${
+            showEmojiPicker ? classes.fullWidth : classes.short
+          }`,
+          // focused: classes.focused,
+        }}
+        variant="outlined"
+      />
 
       {showEmojiPicker ? (
         <>
-        <PureEmojiInput text={text} setText={setText} abs={true} />
-        <HeaderOptions text={text} />
-      </>
+          <PureEmojiInput text={text} setText={setText} abs={true} />
+          <HeaderOptions text={text} />
+        </>
       ) : null}
-   
     </Grid>
   );
 };
 
 export default SelfClosingEmojiInput;
+
+{
+  /* <OutlinedInput
+          fullWidth={true}
+          onChange={allowEmojisAndDeleting(setText)}
+          classes={{
+            root: `${classes.input} ${
+              showEmojiPicker ? classes.fullWidth : classes.short
+            }`,
+            focused: classes.focused,
+          }}
+          color="secondary"
+       
+        /> */
+}

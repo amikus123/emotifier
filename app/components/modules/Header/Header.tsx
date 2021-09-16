@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
     header: {
       height: "6.75rem",
       [theme.breakpoints.up("md")]: {
-        height: "4rem",
+        height: "5rem",
       },
     },
     toolbar: {
