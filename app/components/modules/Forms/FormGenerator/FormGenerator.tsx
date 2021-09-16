@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import EmailInput from "../../../elements/Inputs/EmailInput/EmailInput";
@@ -60,14 +60,22 @@ const FormGenerator = ({ handleSubmit, type }: Props) => {
  
   const router = useRouter();
   const classes = useStyles();
-
+useEffect(()=>{
+console.log(formValuesErrors)
+},[formValuesErrors])
   const handleGenerator = (valueName: string) => {
     const res = (newValue: string) => {
       setFormValues({ ...formValues, [valueName]: newValue });
     };
     return res;
   };
-
+  const resetErrorTextGenerator =(valueName: string) => {
+    const res = () => {
+      console.log("should reset ", valueName)
+      setFormValuesErrors({ ...formValuesErrors, [valueName]: "" });
+    };
+    return res;
+  };
   return (
     <form
       onSubmit={async (e) => {
@@ -107,7 +115,7 @@ const FormGenerator = ({ handleSubmit, type }: Props) => {
             text={formValues.username}
             label="nick"
             errorText={formValuesErrors.username}
-
+            resetErrorText={resetErrorTextGenerator("username")}
           />
         ) : null}
 
@@ -115,7 +123,8 @@ const FormGenerator = ({ handleSubmit, type }: Props) => {
           <EmailInput
             setEmail={handleGenerator("email")}
             email={formValues.email}
-            errorText={formValuesErrors.username}
+            errorText={formValuesErrors.email}
+            resetErrorText={resetErrorTextGenerator("email")}
 
           />
         ) : null}
@@ -124,7 +133,8 @@ const FormGenerator = ({ handleSubmit, type }: Props) => {
           <PasswordInput
             setPassword={handleGenerator("password")}
             password={formValues.password}
-            errorText={formValuesErrors.username}
+            errorText={formValuesErrors.password}
+            resetErrorText={resetErrorTextGenerator("password")}
 
           />
         ) : null}

@@ -1,44 +1,41 @@
 import {
-  FormControl,
-  InputLabel,
-  FilledInput,
   InputAdornment,
   IconButton,
+  TextField,
 } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import React,{useState} from "react";
+import React, { useState } from "react";
+import { capitalize } from "../../../../utils/general/stringManipulation";
 
-interface Props{
+interface Props {
   password: string;
-  setPassword:(string:string)=>void
-  errorText:string
-
+  setPassword: (string: string) => void;
+  errorText: string;
+  resetErrorText?:()=>void;
 }
-const PasswordInput = ({
-  password,
-  setPassword,errorText
-}: Props) => {
-
-  const [showPassword,setShowPassword] = useState(false)
-  const togglePassword = () =>{
-    setShowPassword(!showPassword)
-  }
-
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
+const PasswordInput = ({ password, setPassword, errorText ,resetErrorText}: Props) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePassword = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
-    <FormControl variant="filled">
-      <InputLabel htmlFor="filled-adornment-password">Password</InputLabel>
-      <FilledInput
-        id="filled-adornment-password"
-        type={showPassword ? "text" : "password"}
-        value={password}
-        onChange={(e)=>{setPassword(e.target.value)}}
-        endAdornment={
+    <TextField
+      error={!!errorText}
+      id="filled-adornment-password"
+      type={showPassword ? "text" : "password"}
+      value={password}
+      label="Password"
+      onChange={(e) => {
+        setPassword(e.target.value);
+        if(errorText && resetErrorText){
+          resetErrorText()
+        }
+      }}
+      helperText={capitalize(errorText)}
+
+      InputProps={{
+        endAdornment: (
           <InputAdornment position="end">
             <IconButton
               aria-label="toggle password visibility"
@@ -49,10 +46,10 @@ const PasswordInput = ({
               {showPassword ? <Visibility /> : <VisibilityOff />}
             </IconButton>
           </InputAdornment>
-        }
-      />
-      {errorText}
-    </FormControl>
+        ),
+      }}
+      variant="filled"
+    />
   );
 };
 

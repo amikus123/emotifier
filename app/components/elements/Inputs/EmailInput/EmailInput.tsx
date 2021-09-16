@@ -1,35 +1,34 @@
-import {
-  FilledInput,
-  FormControl,
-  Grid,
-  InputLabel,
-} from "@material-ui/core";
+import { FormControl, Grid, TextField } from "@material-ui/core";
 import React from "react";
+import { capitalize } from "../../../../utils/general/stringManipulation";
 
-interface Props{
-  setEmail: (string:string) => void;
+interface Props {
+  setEmail: (string: string) => void;
   email: string;
-  errorText:string
+  errorText: string;
+  resetErrorText?:() => void;
+
 }
-const EmailInput = ({
-  setEmail,
-  email,errorText
-}: Props) => {
+const EmailInput = ({ setEmail, email, errorText,resetErrorText }: Props) => {
   return (
-    <Grid item>
-      <FormControl variant="filled">
-        <InputLabel htmlFor="filled-adornment-password">Email</InputLabel>
-        <FilledInput
-          id="name-input"
-          name="name"
+
+        <TextField
+         error={!!errorText}
+          fullWidth={true}
+          inputProps={{ autoComplete: "off" }}
           type="email"
           value={email}
-         
-          onChange={(e)=>{setEmail(e.target.value)}}
+          name="name"
+          label="Email"
+          onChange={(e) => {
+            if(errorText && resetErrorText){
+              resetErrorText()
+            }
+            setEmail(e.target.value);
+          }}
+          helperText={capitalize(errorText)}
+          variant="filled"
         />
-      </FormControl>
-      {errorText}
-    </Grid>
   );
 };
 
