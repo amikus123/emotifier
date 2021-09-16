@@ -7,9 +7,12 @@ import {
   makeStyles,
   Theme,
   OutlinedInput,
+  FormHelperText,
+  FormLabel,
+  TextField,
 } from "@material-ui/core";
 import React, { useEffect, useRef, useState } from "react";
-import  useHeaderOutsideClick  from "../../../../hooks/header";
+import useHeaderOutsideClick from "../../../../hooks/header";
 import { allowEmojisAndDeleting } from "../../../../utils/forms/emojiInputs";
 import { capitalize } from "../../../../utils/general/stringManipulation";
 import HeaderOptions from "../../../modules/Search/SearchSuggestions/HeaderOptions";
@@ -36,12 +39,10 @@ interface Props {
   text: string;
   label: string;
   abs?: boolean;
-  children?: Element | null;
   suggsestions?: boolean;
   className?: string;
-  // dosent hide the emoji picker if
-  // clicked element has this class
   outlined?: boolean;
+  errorText: string;
 }
 
 const EmojiInput = ({
@@ -49,26 +50,16 @@ const EmojiInput = ({
   text,
   label,
   abs = false,
-  children = null,
   suggsestions = false,
   outlined = false,
   className = "",
+  errorText = "",
 }: Props) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const container = useRef(null);
-  // TODO ADD AUTO FOCUS ON INPUT
-  useEffect(() => {
-    if (container.current) {
-      console.log("fiered");
-      setShowEmojiPicker(true);
-      // dosnet workd :(
-      container.current.focus();
-    }
-  }, []);
-
   const classes = useStyles();
 
-  useHeaderOutsideClick(container, setShowEmojiPicker,showEmojiPicker);
+  useHeaderOutsideClick(container, setShowEmojiPicker, showEmojiPicker);
 
   return (
     <Grid
@@ -79,40 +70,24 @@ const EmojiInput = ({
       }}
       className={`${classes.root} ${className}`}
     >
-      {children === null ? (
-        <FormControl variant="filled" fullWidth={true}>
-          {label !== "" ? (
-            <InputLabel htmlFor="filled-adornment-password">
-              {capitalize(label)}
-            </InputLabel>
-          ) : null}
-          {outlined ? (
-            <OutlinedInput
-              fullWidth={true}
-              inputProps={{ autoComplete: "off" }}
-              name={label}
-              type="text"
-              value={text}
-              onChange={allowEmojisAndDeleting(setText)}
-              classes={{
-                root: classes.input,
-                focused: classes.focused,
-              }}
-            />
-          ) : (
-            <FilledInput
-              fullWidth={true}
-              inputProps={{ autoComplete: "off" }}
-              name={label}
-              type="text"
-              value={text}
-              onChange={allowEmojisAndDeleting(setText)}
-            />
-          )}
-        </FormControl>
-      ) : (
-        children
-      )}
+      <FormControl variant="filled" fullWidth={true}>
+        <TextField
+          error={!!errorText}
+          fullWidth={true}
+          inputProps={{ autoComplete: "off" }}
+          name={label}
+          type="text"
+          value={text}
+          label={capitalize(label)}
+          onChange={allowEmojisAndDeleting(setText)}
+          classes={{
+            root: classes.input,
+            // focused: classes.focused,
+          }}
+          helperText={capitalize(errorText)}
+          variant={outlined ? "outlined" : "filled"}
+        />
+      </FormControl>
 
       {showEmojiPicker ? (
         <PureEmojiInput text={text} setText={setText} abs={abs} />

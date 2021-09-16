@@ -53,6 +53,7 @@ const ProfilePicSelector = ({ setText, text, className = "" }: Props) => {
         console.error(e);
         enqueueSnackbar("You can't pick this emoji 🙁", {
           variant: "error",
+          
         });
         // setUnicode("");
       }

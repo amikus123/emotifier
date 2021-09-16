@@ -1,24 +1,23 @@
-import { createSlice,PayloadAction  } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { DbUser } from "../../../types/db";
 
-
-const initialState = { username: "none",email:"none",userId:"none" } as DbUser
-
+const initialState = {
+  username: "user",
+  email: "emial",
+  profilePic: "pic",
+  userId: "xd",
+} as DbUser;
 
 export const userReducer = createSlice({
-  name: "user",
+  name:"userDbEntry",
   initialState,
   reducers: {
- 
- 
-    overWriteData:(state,action: PayloadAction<DbUser>)=>{
+    overWriteData: (state, action: PayloadAction<DbUser>) => {
       return { ...state, ...action.payload };
-
-    }
+    },
   },
 });
 
-export const {overWriteData } = userReducer.actions;
-
+export const { overWriteData } = userReducer.actions;
 
 export default userReducer.reducer;

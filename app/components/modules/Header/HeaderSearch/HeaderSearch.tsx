@@ -55,6 +55,7 @@ const HeaderSearch = ({ text, setText, className = "" }: Props) => {
         text={text}
         setText={setText}
         abs={true}
+        
         label="Search"
         suggsestions={true}
         className={`${classes.showInput} hideMobile`}

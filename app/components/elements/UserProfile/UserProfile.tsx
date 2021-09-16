@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
-import facebookLogo from "../../../../public/facebookLogo.svg";
 import { IconButton, Typography } from "@material-ui/core";
 import Link from "next/link";
 const useStyles = makeStyles((theme: Theme) =>
@@ -29,9 +28,10 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   text?: string;
   className?: string;
+  src?:string,
   onClick?:(arg:any)=>any
 }
-const UserProfile = ({ text = "", className = "",onClick =()=>{}}: Props) => {
+const UserProfile = ({ text = "", className = "",onClick =()=>{},src=""}: Props) => {
   const classes = useStyles();
 
   return (
@@ -40,7 +40,7 @@ const UserProfile = ({ text = "", className = "",onClick =()=>{}}: Props) => {
         <IconButton>
           <Avatar
             alt="Remy Sharp"
-            src={facebookLogo.src}
+            src={src}
             className={classes.img}
           />
         </IconButton>

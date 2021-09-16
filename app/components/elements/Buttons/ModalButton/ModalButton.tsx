@@ -29,7 +29,6 @@ const options = {
   facebook: {
     handleSubmit: loginWithFacebook,
     modal: addEmojiUsername,
-
     icon: facebookLogo,
     dialogTitle: "First enter your emoji nick",
   },

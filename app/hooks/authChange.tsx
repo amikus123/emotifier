@@ -17,7 +17,6 @@ export const useChangeUserStoreData = () => {
         if (data !== null) {
           console.log("logged", data);
           store.dispatch(overWriteData(data));
-
           // setting redux user to db entry
         } else {
           // anon

@@ -54,8 +54,6 @@ interface Props {
   text: string;
   label: string;
   className?: string;
-  // dosent hide the emoji picker if
-  // clicked element has this class
 }
 
 const SelfClosingEmojiInput = ({
@@ -68,20 +66,9 @@ const SelfClosingEmojiInput = ({
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const ignoredClass = "header_sadge";
   // TODO ADD AUTO FOCUS ON INPUT
-  useEffect(() => {
-    if (container.current) {
-
-      console.log("fiered");
-      setShowEmojiPicker(true);
-      // dosnet workd :(
-      container.current.focus();
-    }
-  }, []);
 
   const classes = useStyles();
-
   useHeaderOutsideClick(container, setShowEmojiPicker,showEmojiPicker, ignoredClass);
-
   const toggleSearch = (e) => {
     console.log("CLICIKDE BUTTON")
     setShowEmojiPicker(!showEmojiPicker);
@@ -130,9 +117,12 @@ const SelfClosingEmojiInput = ({
       </FormControl>
 
       {showEmojiPicker ? (
+        <>
         <PureEmojiInput text={text} setText={setText} abs={true} />
+        <HeaderOptions text={text} />
+      </>
       ) : null}
-      {showEmojiPicker ? <HeaderOptions text={text} /> : null}
+   
     </Grid>
   );
 };

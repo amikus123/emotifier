@@ -11,10 +11,12 @@ import React,{useState} from "react";
 interface Props{
   password: string;
   setPassword:(string:string)=>void
+  errorText:string
+
 }
 const PasswordInput = ({
   password,
-  setPassword,
+  setPassword,errorText
 }: Props) => {
 
   const [showPassword,setShowPassword] = useState(false)
@@ -49,6 +51,7 @@ const PasswordInput = ({
           </InputAdornment>
         }
       />
+      {errorText}
     </FormControl>
   );
 };

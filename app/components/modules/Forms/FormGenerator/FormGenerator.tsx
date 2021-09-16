@@ -34,27 +34,31 @@ const options = {
     },
   },
 };
+
+
+const useStyles = makeStyles((theme: Theme) =>
+createStyles({
+  root: {
+    "&  >div": {
+      width: "100%",
+      paddingBottom: "2rem",
+      "& >div": {
+        width: "100%",
+      },
+    },
+  },
+})
+);
 interface Props {
   handleSubmit: (values: any) => Promise<any>;
   type: "emailLogin" | "emailRegistration" | "usernameInput";
 }
+
 const FormGenerator = ({ handleSubmit, type }: Props) => {
   const [formValues, setFormValues] = useState(options[type].defaultValues);
+  const [formValuesErrors, setFormValuesErrors] = useState(options[type].defaultValues);
+ 
   const router = useRouter();
-
-  const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-      root: {
-        "&  >div": {
-          width: "100%",
-          paddingBottom: "2rem",
-          "& >div": {
-            width: "100%",
-          },
-        },
-      },
-    })
-  );
   const classes = useStyles();
 
   const handleGenerator = (valueName: string) => {
@@ -70,14 +74,24 @@ const FormGenerator = ({ handleSubmit, type }: Props) => {
         console.log("submited");
         console.log(formValues,"form c")
         e.preventDefault();
-        if (type === "usernameInput") {
-          const res = await handleSubmit(formValues);
-          if (res === "registered") {
-            router.push("/feed");
+        const res = await handleSubmit(formValues);
+        console.log(res,"REZULTAT")
+
+        if(res.error){
+          setFormValuesErrors(res.errorValues)
+          // set error
+        }else{
+          if (type === "usernameInput") {
+            const res = await handleSubmit(formValues);
+            console.log(res,"a")
+            if (res === "registered") {
+              router.push("/feed");
+            }
+          } else {
+            await handleSubmit(formValues);
           }
-        } else {
-          await handleSubmit(formValues);
         }
+     
       }}
     >
       <Grid
@@ -92,6 +106,8 @@ const FormGenerator = ({ handleSubmit, type }: Props) => {
             setText={handleGenerator("username")}
             text={formValues.username}
             label="nick"
+            errorText={formValuesErrors.username}
+
           />
         ) : null}
 
@@ -99,6 +115,8 @@ const FormGenerator = ({ handleSubmit, type }: Props) => {
           <EmailInput
             setEmail={handleGenerator("email")}
             email={formValues.email}
+            errorText={formValuesErrors.username}
+
           />
         ) : null}
 
@@ -106,6 +124,8 @@ const FormGenerator = ({ handleSubmit, type }: Props) => {
           <PasswordInput
             setPassword={handleGenerator("password")}
             password={formValues.password}
+            errorText={formValuesErrors.username}
+
           />
         ) : null}
         {formValues.profilePic !== null ? (

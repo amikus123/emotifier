@@ -1,7 +1,7 @@
 import type { AppProps } from "next/app";
 import React, { useEffect, useState } from "react";
 import { initializeApp } from "firebase/app";
-import { Provider, useSelector } from "react-redux";
+import { Provider } from "react-redux";
 import store from "../app/store/store";
 import { getFirestore } from "firebase/firestore";
 import { getThemeFromString } from "../app/constans/themeConfig";
@@ -93,7 +93,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
         <ThemeProvider theme={theme}>
         
-          <SnackbarProvider maxSnack={5} preventDuplicate >
+          <SnackbarProvider maxSnack={5} preventDuplicate hideIconVariant>
             <CssBaseline />
             <Component {...pageProps} />
           </SnackbarProvider>
