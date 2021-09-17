@@ -72,10 +72,12 @@ export const validateInput = (
 ): FormValidationResult => {
   let errorCount = 0;
   Object.keys(data).forEach((key) => {
-    const error = functionToKey[key](data[key]);
-    if (error) {
-      errorValues[key] = error;
-      errorCount++;
+    if (data[key] !== null) {
+      const error = functionToKey[key](data[key]);
+      if (error) {
+        errorValues[key] = error;
+        errorCount++;
+      }
     }
   });
   // check if any inmput is incorrect
@@ -85,7 +87,7 @@ export const validateInput = (
 
 //  SUBMIT FUNCTIONS
 const loginWithExternalGenerator = (name: "google" | "facebook") => {
-  return async () => {
+  return async (): Promise<FormValidationResult> => {
     let provider;
     if (name === "google") {
       provider = new GoogleAuthProvider();
@@ -97,21 +99,34 @@ const loginWithExternalGenerator = (name: "google" | "facebook") => {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       const dbData = await getUserById(user.uid);
-      if (dbData === null) {
+      console.log(dbData)
+      if (
+        dbData === null ||
+        (dbData !== null && (dbData.username === "" || dbData.username))
+      ) {
         await writeUserData("", user.email, user.uid, "");
-        console.log(auth.currentUser, validationTextCodes.registered);
-        return returnErrorValidationResult(errorValues, false, validationTextCodes.registered);
-      } else if (dbData !== null) {
-        console.log(auth.currentUser, validationTextCodes.loggedIn);
-        return returnErrorValidationResult(errorValues, false, validationTextCodes.loggedIn);
-      } else {
         console.log(auth.currentUser, validationTextCodes.toRegister);
-        return returnErrorValidationResult(errorValues, false, validationTextCodes.toRegister);
+        return returnErrorValidationResult(
+          errorValues,
+          false,
+          validationTextCodes.toRegister
+        );
+      } else {
+        console.log(auth.currentUser, validationTextCodes.goFeed);
+        return returnErrorValidationResult(
+          errorValues,
+          false,
+          validationTextCodes.goFeed
+        );
       }
     } catch (error) {
       const errorMessage = error.message;
       errorValues.email = errorMessage;
-      return returnErrorValidationResult(errorValues, true, validationTextCodes.externalLoginError);
+      return returnErrorValidationResult(
+        errorValues,
+        true,
+        validationTextCodes.externalLoginError
+      );
     }
   };
 };
@@ -119,11 +134,16 @@ const loginWithExternalGenerator = (name: "google" | "facebook") => {
 export const addEmojiUsername = async (values: {
   username: string;
   profilePic: string;
-}) => {
+}): Promise<FormValidationResult> => {
   const errorValues = getDefaultErrorValues();
   try {
     const auth = getAuth();
     const { username, profilePic } = values;
+    const errorValidationResult = validateInput({...values,email:null,password:null}, errorValues);
+
+    if (errorValidationResult.error) {
+      return errorValidationResult;
+    }
     const userId = auth.currentUser.uid;
     const docRef = doc(db, "users", userId);
     const docSnap = await getDoc(docRef);
@@ -132,19 +152,40 @@ export const addEmojiUsername = async (values: {
         username,
         profilePic,
       });
-      console.log("Added nick:", docSnap.data());
-      return returnErrorValidationResult(errorValues, false, validationTextCodes.addedEmojiUsername);
+      console.log(
+        "Added nick:",
+        returnErrorValidationResult(
+          errorValues,
+          false,
+          validationTextCodes.goFeed
+        )
+      );
+      return returnErrorValidationResult(
+        errorValues,
+        false,
+        validationTextCodes.goFeed
+      );
     } else {
       console.log("Document does not exist:");
-      return returnErrorValidationResult(errorValues, true, validationTextCodes.failedToAddEmojiUsername);
+      return returnErrorValidationResult(
+        errorValues,
+        true,
+        validationTextCodes.failedToAddEmojiUsername
+      );
     }
   } catch (e) {
-    console.error(e, "addEmojiUsername JEBLO ",);
-    return returnErrorValidationResult(errorValues, true, validationTextCodes.failedToAddEmojiUsername);
+    console.error(e, "addEmojiUsername JEBLO ");
+    return returnErrorValidationResult(
+      errorValues,
+      true,
+      validationTextCodes.failedToAddEmojiUsername
+    );
   }
 };
 
-export const registerWithEmail = async (data: EmailRegisterFormValues) => {
+export const registerWithEmail = async (
+  data: EmailRegisterFormValues
+): Promise<FormValidationResult> => {
   const { username, email, password, profilePic } = data;
   const errorValues = getDefaultErrorValues();
 
@@ -160,18 +201,22 @@ export const registerWithEmail = async (data: EmailRegisterFormValues) => {
         password
       );
       const user = userCredential.user;
-
+      console.log("before fails");
       await writeUserData(username, email, user.uid, profilePic);
+      errorValidationResult.text = validationTextCodes.goFeed;
       return errorValidationResult;
     }
   } catch (e) {
+    console.error("registerWithEmail catch", e);
     const errorMessage = e.message;
     errorValues.email = errorMessage;
     return { error: true, errorValues, text: errorMessage };
   }
 };
 
-export const loginWithEmail = async (data: EmailLoginFormValues) => {
+export const loginWithEmail = async (
+  data: EmailLoginFormValues
+): Promise<FormValidationResult> => {
   const { email, password } = data;
   const errorValues = getDefaultErrorValues();
   try {
@@ -186,6 +231,7 @@ export const loginWithEmail = async (data: EmailLoginFormValues) => {
         password
       );
 
+      errorValidationResult.text = validationTextCodes.goFeed;
       return errorValidationResult;
     }
   } catch (e) {

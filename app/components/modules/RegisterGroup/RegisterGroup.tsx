@@ -85,9 +85,9 @@ const RegisterGroup = ({ className = "" }: { className?: string }) => {
       </Typography>
       <Grid className={classes.innerWrap}>
         <Grid className={classes.buttonsWrap}>
-          <ModalButton name="google" />
-          <ModalButton name="facebook" />
-          <ModalButton name="email" />
+          <ModalButton type="google" />
+          <ModalButton type="facebook" />
+          <ModalButton type="email" />
         </Grid>
 
         <Typography className={classes.agreement}>
@@ -108,7 +108,7 @@ const RegisterGroup = ({ className = "" }: { className?: string }) => {
 
         <Typography className={classes.logged}>
           Already have an account?&nbsp;
-          <ModalButton name="login">Log in</ModalButton>
+          <ModalButton type="login"/>
         </Typography>
       </Grid>
     </Grid>

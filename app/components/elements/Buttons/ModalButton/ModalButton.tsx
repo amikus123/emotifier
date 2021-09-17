@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "@material-ui/core";
+import { useRouter } from 'next/router'
 
 import facebookLogo from "../../../../../public/facebookLogo.svg";
 import gmailLogo from "../../../../../public/gmailLogo.svg";
@@ -8,7 +9,14 @@ import ButtonWithEmoji from "../ButtonWithEmoji/ButtonWithEmoji";
 import CustomDialog from "../../Dialog/CustomDialog";
 import FormGenerator from "../../../modules/Forms/FormGenerator/FormGenerator";
 
-import { registerWithEmail, loginWithEmail,addEmojiUsername, loginWithFacebook, loginWithGoogle } from "../../../../utils/forms/formHandlers";
+import {
+  registerWithEmail,
+  loginWithEmail,
+  addEmojiUsername,
+  loginWithFacebook,
+  loginWithGoogle,
+} from "../../../../utils/forms/formHandlers";
+import { validationTextCodes } from "../../../../constans/validationCodes";
 
 const options = {
   google: {
@@ -44,23 +52,30 @@ const options = {
 };
 
 interface Props {
-  name: "google" | "facebook" | "email" | "login";
-  children?: any;
+  // presets 
+  type: "google" | "facebook" | "email" | "login";
 }
 // This component is used in registration to display modal
 
-export const ModalButton = ({ name, children }: Props) => {
+export const ModalButton = ({ type}: Props) => {
+
+  const router = useRouter()
+
   const [open, setOpen] = React.useState(false);
   // open modal window
   const handleClickOpen = async () => {
-    if (name === "facebook" || name === "google") {
-      const res = await options[name].handleSubmit();
-      console.log(res, "rex");
-      if (res.text === "logged") {
-        // user is already logged
+    // if login source is foreign, we allow to click-login
+    // for registered users, otherwise modal is opened
+    if (type === "facebook" || type === "google") {
+      const res = await options[type].handleSubmit();
+      // user is already registered, we move him to feed
+      // if he dosent have an acount, me open a modal instead
+      if (res.text === validationTextCodes.goFeed) {
+        router.push("/feed")
       } else {
         setOpen(true);
       }
+
     } else {
       setOpen(true);
     }
@@ -71,51 +86,50 @@ export const ModalButton = ({ name, children }: Props) => {
   };
 
   const getComponent = () => {
-    switch (name) {
+    switch (type) {
       case "google":
         return (
           <FormGenerator
             type="usernameInput"
-            handleSubmit={options[name].modal}
+            handleSubmit={options[type].modal}
           />
         );
       case "facebook":
         return (
           <FormGenerator
             type="usernameInput"
-            handleSubmit={options[name].modal}
+            handleSubmit={options[type].modal}
           />
         );
       case "login":
         return (
           <FormGenerator
             type="emailLogin"
-            handleSubmit={options[name].handleSubmit}
+            handleSubmit={options[type].handleSubmit}
           />
         );
       default:
         return (
           <FormGenerator
             type="emailRegistration"
-            handleSubmit={options[name].handleSubmit}
+            handleSubmit={options[type].handleSubmit}
           />
         );
     }
   };
+
   return (
     <>
-      {name !== "login" ? (
-        <ButtonWithEmoji onClick={handleClickOpen} icon={options[name].icon}>
-          Register with {name}
+      {type !== "login" ? (
+        <ButtonWithEmoji onClick={handleClickOpen} icon={options[type].icon}>
+          Register with {type}
         </ButtonWithEmoji>
       ) : (
-        <Link href="" onClick={handleClickOpen}>
-          {children}
-        </Link>
+        <Link href="#" onClick={handleClickOpen}>Log in</Link>
       )}
       <CustomDialog
         open={open}
-        dialogTitle={options[name].dialogTitle}
+        dialogTitle={options[type].dialogTitle}
         handleClose={handleClose}
       >
         {getComponent()}

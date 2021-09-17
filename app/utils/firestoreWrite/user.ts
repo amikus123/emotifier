@@ -14,12 +14,16 @@ export const writeUserData = async (
   profilePic: string
 ) => {
   const docRef = doc(db, "users", userId);
+ try{
   await setDoc(docRef, {
     username,
     email,
     userId,
     profilePic,
   });
+ }catch(e){
+console.log(e,"WTF")
+ }
 };
 
 

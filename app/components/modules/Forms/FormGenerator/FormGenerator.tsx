@@ -15,6 +15,7 @@ import {
   loginWithGoogle,
   loginWithFacebook,
 } from "../../../../utils/forms/formHandlers";
+import { validationTextCodes } from "../../../../constans/validationCodes";
 
 const options = {
   emailLogin: {
@@ -94,28 +95,44 @@ const FormGenerator = ({ handleSubmit, type }: Props) => {
     };
     return res;
   };
-  return (
-    <form
-      onSubmit={async (e) => {
-        e.preventDefault();
+
+  const handleFormSubmit = async (e) => {
+    console.log(e);
+    e.preventDefault();
+    // initial check
+    const res = await handleSubmit(formValues);
+    if (res.error) {
+      setFormValuesErrors(res.errorValues);
+    } else {
+      if (type === "usernameInput") {
         const res = await handleSubmit(formValues);
-        console.log(res, "REZULTAT");
         if (res.error) {
           setFormValuesErrors(res.errorValues);
-          // set error
-        } else {
-          if (type === "usernameInput") {
-            const res = await handleSubmit(formValues);
-            console.log(res, "a");
-            if (res.text === "registered") {
-              router.push("/feed");
-            }
-          } else {
-            await handleSubmit(formValues);
-          }
         }
-      }}
-    >
+          else if (
+            res.text === validationTextCodes.goFeed ||
+            res.text === validationTextCodes.loggedIn
+          ) {
+            router.push("/feed");
+          } else {
+            console.error("!!!!");
+          }
+      } else {
+        if (
+          res.text === validationTextCodes.goFeed ||
+          res.text === validationTextCodes.loggedIn
+        ) {
+          console.log("got it");
+          router.push("/feed");
+        } else {
+          console.error(res, "!!!!");
+        }
+      }
+    }
+  };
+
+  return (
+    <form onSubmit={handleFormSubmit}>
       <Grid
         container
         alignItems="center"

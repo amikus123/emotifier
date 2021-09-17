@@ -2,21 +2,7 @@ import { useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/router";
 import { getUserById } from "../utils/firestoreAccess/user";
-import { notAllowedLogged, notAllowedAnon } from "../constans/urls";
 
-export const shouldRedirectLogged = (path: string) => {
-  if (notAllowedLogged.indexOf(path) !== -1) {
-    return true;
-  }
-  return false;
-};
-
-export const shouldRedirectAnon = (path: string) => {
-  if (notAllowedAnon.indexOf(path) !== -1) {
-    return true;
-  }
-  return false;
-};
 
 export const useRedirectUserIfNecessary = () => {
   const router = useRouter();
@@ -45,3 +31,4 @@ export const useRedirectUserIfNecessary = () => {
     });
   });
 };
+
