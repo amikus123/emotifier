@@ -6,7 +6,7 @@ import {
 } from "firebase/auth";
 import { db } from "../../../pages/_app";
 import { getUserById } from "../firestoreAccess/user";
-import { writeUserData, addEmojiUsername } from "../firestoreWrite/register";
+import { writeUserData, addEmojiUsername } from "../firestoreWrite/user";
 
 
 const auth = getAuth();

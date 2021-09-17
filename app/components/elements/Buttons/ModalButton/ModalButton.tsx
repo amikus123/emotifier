@@ -17,7 +17,7 @@ import {
 } from "../../../../utils/auth/register";
 import { Link } from "@material-ui/core";
 import FormGenerator from "../../../modules/Forms/FormGenerator/FormGenerator";
-import { addEmojiUsername } from "../../../../utils/firestoreWrite/register";
+import { addEmojiUsername } from "../../../../utils/firestoreWrite/user";
 
 const options = {
   google: {

@@ -9,7 +9,8 @@ import {
   EmailLoginFormValues,
   EmailRegisterFormValues,
 } from "../../types/auth";
-import { writeUserData } from "../firestoreWrite/register";
+import { writeUserData } from "../firestoreWrite/user";
+import GraphemeSplitter from "grapheme-splitter";
 
 // EmailRegisterFormValues
 
@@ -34,57 +35,107 @@ export const addToUsedValues = async (
 };
 
 export const validateUsername = (username: string) => {
+  const splitter = new GraphemeSplitter();
+  const arr = splitter.splitGraphemes(username); // returns ["🌷","🎁","💩","😜","👍","🏳️‍🌈"]
+
   if (username === "") {
-    return "username shouldnt be empty";
-  } else if (username.length > 5) {
-    return "username is too long";
+    return "Username can not be empty";
+  } else if (arr.length > 3) {
+    return "Username is too long";
   } else if (
     false
     // emoji only chjeck
   ) {
-    return "username should only cotnain emojis";
+    return "USername should only cotnain emojis";
   } else {
     return false;
   }
 };
 
-const dataPairs = {
-  username: validateUsername,
-  email: validateUsername,
-  password: validateUsername,
-  profilePic: validateUsername,
-};
-
-export const validateInput = (data: EmailRegisterFormValues) => {
-  const errorMap = {};
-  let errorCount = 0
-  Object.keys(data).forEach((key) => {
-    const error = dataPairs[key](data[key]);
-    if (error) {
-      errorMap[key] = error;
-      errorCount++
-    }
-  });
-  console.log(errorMap, "err");
-
-  if (Object.keys(errorMap).length != 0) {
-    return errorMap;
+export const validateEmail = (email: string) => {
+  const emailRegex =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gi;
+  console.log("validateEmail");
+  if (email === "") {
+    return "Email can not be empty";
+  } else if (email.length > 30) {
+    return "Email is too long";
+  } else if (!emailRegex.test(email)) {
+    return "This email is not valid";
   } else {
     return false;
+  }
+};
+export const validatePassword = (password: string) => {
+  const passwordRegex = /^(?=.*\d)$/;
+  if (password === "") {
+    return "Password can not be empty";
+  } else if (password.length < 6) {
+    return "Password is too short";
+  } else {
+    return false;
+  }
+};
+export const validateProfilePic = (emoji: string) => {
+  // TO DO
+  return false;
+};
+
+const functionToKey = {
+  username: validateUsername,
+  email: validateEmail,
+  password: validatePassword,
+  profilePic: validateProfilePic,
+};
+
+interface errorData {
+  username: string;
+  email: string;
+  password: string;
+  profilePic: string;
+}
+
+export const validateInput = (data: EmailRegisterFormValues,errorValues:errorData) => {
+
+  let errorCount = 0;
+  Object.keys(data).forEach((key) => {
+    const error = functionToKey[key](data[key]);
+    if (error) {
+      errorValues[key] = error;
+      errorCount++;
+    }
+  });
+
+  if (errorCount != 0) {
+    return {
+      error:true,
+      errorValues,
+    };
+  } else {
+    return {
+      error:false,
+      errorValues,
+    }
   }
 };
 
 export const registerWithEmail = async (data: EmailRegisterFormValues) => {
-  console.log("validete input");
+  console.log("registerWithEmail");
+
+  const errorCheck :errorData = {
+    username:"",
+    email:"",
+    password:"",
+    profilePic:"",
+  }
   const { username, email, password, profilePic } = data;
   try {
+    const errorWrapper = validateInput(data,errorCheck);
     const auth = getAuth();
-    const errorCheck = validateInput(data);
-    if (errorCheck) {
-      return { error: true, errorValues:errorCheck };
+    console.log(errorCheck, "XD");
+    if (errorWrapper.error) {
+      return errorWrapper
     }
-    console.log("registerWithEmailAndPassword");
-    console.log(username, email, password, profilePic);
 
     const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -92,12 +143,15 @@ export const registerWithEmail = async (data: EmailRegisterFormValues) => {
       password
     );
     const user = userCredential.user;
-
+    
     await writeUserData(username, email, user.uid, profilePic);
+    return errorWrapper
   } catch (e) {
     const errorCode = e.code;
     const errorMessage = e.message;
-    console.error("blad  ", errorCode, errorMessage);
+    errorCheck.email = errorMessage;
+    console.error("blad  ", errorCheck);
+    return { error: true, errorValues:errorCheck };
   }
 };
 

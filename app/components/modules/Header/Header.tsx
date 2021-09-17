@@ -5,7 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconSections from "./IconSections";
 import LogoImage from "../../elements/Logo/LogoImage";
 import HeaderTabs from "./HeaderTabs/HeaderTabs";
-import HeaderSearchController from "./HeaderSearch/HeaderSearchController";
+import HeaderSearchController from "./HeaderSearch/HeaderSearch";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     menuButton: {

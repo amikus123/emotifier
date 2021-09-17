@@ -77,8 +77,8 @@ const EmojiInput = ({
         type="text"
         value={text}
         label={capitalize(label)}
-        onChange={() => {
-          allowEmojisAndDeleting(setText);
+        onChange={(e) => {
+          allowEmojisAndDeleting(setText)(e);
           if (errorText && resetErrorText) {
             resetErrorText();
           }

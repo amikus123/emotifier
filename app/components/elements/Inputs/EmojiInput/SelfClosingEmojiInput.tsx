@@ -4,7 +4,6 @@ import {
   makeStyles,
   Theme,
   InputAdornment,
-  capitalize,
   TextField,
 } from "@material-ui/core";
 import React, { useEffect, useRef, useState } from "react";
@@ -150,18 +149,3 @@ const SelfClosingEmojiInput = ({
 };
 
 export default SelfClosingEmojiInput;
-
-{
-  /* <OutlinedInput
-          fullWidth={true}
-          onChange={allowEmojisAndDeleting(setText)}
-          classes={{
-            root: `${classes.input} ${
-              showEmojiPicker ? classes.fullWidth : classes.short
-            }`,
-            focused: classes.focused,
-          }}
-          color="secondary"
-       
-        /> */
-}
