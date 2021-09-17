@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import EmailInput from "../../../elements/Inputs/EmailInput/EmailInput";
@@ -7,6 +7,14 @@ import EmojiInput from "../../../elements/Inputs/EmojiInput/EmojiInput";
 import { makeStyles, Theme, createStyles } from "@material-ui/core";
 import { useRouter } from "next/router";
 import ProfilePicSelector from "../../../elements/Inputs/ProfilePicSelector/ProfilePicSelector";
+
+import {
+  addEmojiUsername,
+  loginWithEmail,
+  registerWithEmail,
+  loginWithGoogle,
+  loginWithFacebook,
+} from "../../../../utils/forms/formHandlers";
 
 const options = {
   emailLogin: {
@@ -35,43 +43,53 @@ const options = {
   },
 };
 
-
 const useStyles = makeStyles((theme: Theme) =>
-createStyles({
-  root: {
-    "&  >div": {
-      width: "100%",
-      paddingBottom: "2rem",
-      "& >div": {
+  createStyles({
+    root: {
+      "&  >div": {
         width: "100%",
+        paddingBottom: "2rem",
+        "& >div": {
+          width: "100%",
+        },
       },
     },
-  },
-})
+  })
 );
+type FormFunctions =
+  | typeof loginWithEmail
+  | typeof registerWithEmail
+  | typeof loginWithGoogle
+  | typeof loginWithFacebook
+  | typeof addEmojiUsername;
 interface Props {
-  handleSubmit: (values: any) => Promise<any>;
+  handleSubmit: FormFunctions;
   type: "emailLogin" | "emailRegistration" | "usernameInput";
 }
 
 const FormGenerator = ({ handleSubmit, type }: Props) => {
   const [formValues, setFormValues] = useState(options[type].defaultValues);
-  const [formValuesErrors, setFormValuesErrors] = useState(options[type].defaultValues);
- 
+  const [formValuesErrors, setFormValuesErrors] = useState(
+    options[type].defaultValues
+  );
+
   const router = useRouter();
   const classes = useStyles();
-useEffect(()=>{
-console.log(formValuesErrors)
-},[formValuesErrors])
+
+  useEffect(() => {
+    console.log(formValuesErrors);
+  }, [formValuesErrors]);
+
   const handleGenerator = (valueName: string) => {
     const res = (newValue: string) => {
       setFormValues({ ...formValues, [valueName]: newValue });
     };
     return res;
   };
-  const resetErrorTextGenerator =(valueName: string) => {
+
+  const resetErrorTextGenerator = (valueName: string) => {
     const res = () => {
-      console.log("should reset ", valueName)
+      console.log("should reset ", valueName);
       setFormValuesErrors({ ...formValuesErrors, [valueName]: "" });
     };
     return res;
@@ -79,27 +97,23 @@ console.log(formValuesErrors)
   return (
     <form
       onSubmit={async (e) => {
-        console.log("submited");
-        console.log(formValues,"form c")
         e.preventDefault();
         const res = await handleSubmit(formValues);
-        console.log(res,"REZULTAT")
-
-        if(res.error){
-          setFormValuesErrors(res.errorValues)
+        console.log(res, "REZULTAT");
+        if (res.error) {
+          setFormValuesErrors(res.errorValues);
           // set error
-        }else{
+        } else {
           if (type === "usernameInput") {
             const res = await handleSubmit(formValues);
-            console.log(res,"a")
-            if (res === "registered") {
+            console.log(res, "a");
+            if (res.text === "registered") {
               router.push("/feed");
             }
           } else {
             await handleSubmit(formValues);
           }
         }
-     
       }}
     >
       <Grid
@@ -125,7 +139,6 @@ console.log(formValuesErrors)
             email={formValues.email}
             errorText={formValuesErrors.email}
             resetErrorText={resetErrorTextGenerator("email")}
-
           />
         ) : null}
 
@@ -135,7 +148,6 @@ console.log(formValuesErrors)
             password={formValues.password}
             errorText={formValuesErrors.password}
             resetErrorText={resetErrorTextGenerator("password")}
-
           />
         ) : null}
         {formValues.profilePic !== null ? (

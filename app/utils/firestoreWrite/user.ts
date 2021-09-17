@@ -22,25 +22,4 @@ export const writeUserData = async (
   });
 };
 
-export const addEmojiUsername = async (values: {
-  username: string;
-  profilePic: string;
-}) => {
-  const { username, profilePic } = values;
-  console.log(values, "values");
-  const auth = getAuth();
-  const userId = auth.currentUser.uid;
-  console.log(userId);
-  const docRef = doc(db, "users", userId);
-  const docSnap = await getDoc(docRef);
-  if (docSnap.exists()) {
-    await updateDoc(docRef, {
-      username,
-      profilePic,
-    });
-    console.log("Added nick:", docSnap.data());
-  } else {
-    console.log("Document does not exist:");
-  }
-  return "registered";
-};
+

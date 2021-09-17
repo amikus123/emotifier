@@ -1,27 +1,21 @@
+import React from "react";
+import { Link } from "@material-ui/core";
+
 import facebookLogo from "../../../../../public/facebookLogo.svg";
 import gmailLogo from "../../../../../public/gmailLogo.svg";
 import googleLogo from "../../../../../public/googleLogo.svg";
-
-import React from "react";
-
 import ButtonWithEmoji from "../ButtonWithEmoji/ButtonWithEmoji";
-import {
-  loginWithFacebook,
-  loginWithGoogle,
-} from "../../../../utils/auth/registerWithForeign";
-
 import CustomDialog from "../../Dialog/CustomDialog";
-import {
-  loginWithEmail,
-  registerWithEmail,
-} from "../../../../utils/auth/register";
-import { Link } from "@material-ui/core";
 import FormGenerator from "../../../modules/Forms/FormGenerator/FormGenerator";
-import { addEmojiUsername } from "../../../../utils/firestoreWrite/user";
+
+import { registerWithEmail, loginWithEmail,addEmojiUsername, loginWithFacebook, loginWithGoogle } from "../../../../utils/forms/formHandlers";
 
 const options = {
   google: {
+    // functions that fires on form submit
     handleSubmit: loginWithGoogle,
+    // function that fires on nutton click, allows for
+    // insta login with externmal providers
     modal: addEmojiUsername,
     icon: googleLogo,
     dialogTitle: "First enter your emoji nick",
@@ -41,11 +35,11 @@ const options = {
     icon: gmailLogo,
   },
   login: {
+    handleSubmit: loginWithEmail,
     modal: () => {
       throw new Error("shouldnt fire");
     },
     dialogTitle: "Login",
-    handleSubmit: loginWithEmail,
   },
 };
 
@@ -57,12 +51,12 @@ interface Props {
 
 export const ModalButton = ({ name, children }: Props) => {
   const [open, setOpen] = React.useState(false);
-
+  // open modal window
   const handleClickOpen = async () => {
     if (name === "facebook" || name === "google") {
       const res = await options[name].handleSubmit();
       console.log(res, "rex");
-      if (res === "logged") {
+      if (res.text === "logged") {
         // user is already logged
       } else {
         setOpen(true);
