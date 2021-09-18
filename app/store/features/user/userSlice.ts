@@ -2,10 +2,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { DbUser } from "../../../types/db";
 
 const initialState = {
-  username: "user",
-  email: "emial",
-  profilePic: "pic",
-  userId: "xd",
+  username: "",
+  email: "",
+  profilePic: "",
+  userId: "",
 } as DbUser;
 
 export const userReducer = createSlice({

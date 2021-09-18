@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import { IconButton, Typography } from "@material-ui/core";
-import Link from "next/link";
+import Skeleton from "@material-ui/lab/Skeleton";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -17,11 +17,11 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     img: {
-      width: "2rem",
-      height: "2rem",
+      width: "3rem",
+      height: "3rem",
     },
     name: {
-      marginLeft: "0.5rem",
+      marginRight: "0.5rem",
     },
   })
 );
@@ -32,7 +32,7 @@ interface Props {
   onClick?: (arg: any) => any;
 }
 const UserProfile = ({
-  text = "",
+  text,
   className = "",
   onClick = () => {},
   src = "",
@@ -40,18 +40,26 @@ const UserProfile = ({
   const classes = useStyles();
 
   return (
-    // <Link href="/user" passHref>
     <div className={`${classes.root} ${className}`} onClick={onClick}>
-      {text !== "" ? (
-        <Typography className={classes.name}>{text}</Typography>
+      {text !== undefined ? (
+          text===""?(
+<Skeleton variant="text"    animation="wave" width={40}  className={classes.name}/>
+          ):(
+            <Typography className={classes.name}>{text}</Typography>
+          )      
       ) : null}
+
       <IconButton>
-        <Avatar
+        {
+          src!==""?
+          <Avatar
           alt="Remy Sharp"
           src={src}
           className={classes.img}
           variant="square"
-        />
+        />:<Skeleton variant="rect" animation="wave" width={48} height={48} />
+        }
+       
       </IconButton>
     </div>
     // </Link>
