@@ -22,12 +22,13 @@ const useStyles = makeStyles((theme: Theme) =>
       position: "relative",
       flexGrow: 1,
       maxWidth: "400px",
+      
     },
 
     header: {
-      height: "6.75rem",
+      height: "7.5rem",
       [theme.breakpoints.up("md")]: {
-        height: "5rem",
+        height: "4.5rem",
       },
     },
     toolbar: {
@@ -45,6 +46,8 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       padding: "0 0.5rem",
       height: "100%",
+      minHeight:"4.5rem"
+
     },
     wrapper: {
       position: "relative",

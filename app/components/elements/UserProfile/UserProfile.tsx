@@ -20,32 +20,40 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "2rem",
       height: "2rem",
     },
-    name:{
-      marginLeft:"0.5rem",
-    }
+    name: {
+      marginLeft: "0.5rem",
+    },
   })
 );
 interface Props {
   text?: string;
   className?: string;
-  src?:string,
-  onClick?:(arg:any)=>any
+  src?: string;
+  onClick?: (arg: any) => any;
 }
-const UserProfile = ({ text = "", className = "",onClick =()=>{},src=""}: Props) => {
+const UserProfile = ({
+  text = "",
+  className = "",
+  onClick = () => {},
+  src = "",
+}: Props) => {
   const classes = useStyles();
 
   return (
     // <Link href="/user" passHref>
-      <div className={`${classes.root} ${className}`} onClick={onClick}>
-        <IconButton>
-          <Avatar
-            alt="Remy Sharp"
-            src={src}
-            className={classes.img}
-          />
-        </IconButton>
-        {text !== "" ? <Typography className={classes.name}>{text}</Typography> : null}
-      </div>
+    <div className={`${classes.root} ${className}`} onClick={onClick}>
+      {text !== "" ? (
+        <Typography className={classes.name}>{text}</Typography>
+      ) : null}
+      <IconButton>
+        <Avatar
+          alt="Remy Sharp"
+          src={src}
+          className={classes.img}
+          variant="square"
+        />
+      </IconButton>
+    </div>
     // </Link>
   );
 };

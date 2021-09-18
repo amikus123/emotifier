@@ -6,23 +6,33 @@ import UserProfile from "../../elements/UserProfile/UserProfile";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-      root: {
+    root: {
       display: "flex",
       marginRight: "1rem",
     },
   })
 );
 
-interface Props {handleDrawerToggle: ()=>void}
+interface Props {
+  handleDrawerToggle: () => void;
+}
 
-const IconSections = ({handleDrawerToggle}: Props) => {
+const IconSections = ({ handleDrawerToggle }: Props) => {
   const classes = useStyles();
-  const user = useSelector((state:RootState) => state.user)
+  const user = useSelector((state: RootState) => state.user);
   return (
     <div className={classes.root}>
-      <p>{user.username}</p>
-      <UserProfile className={` showMobile`} onClick={handleDrawerToggle}/>
-      <UserProfile src={user.profilePic} text="pog" className={`hideMobile`} onClick={handleDrawerToggle}/>
+      <UserProfile
+        src={user.profilePic}
+        className={` showMobile`}
+        onClick={handleDrawerToggle}
+      />
+      <UserProfile
+        src={user.profilePic}
+        text={user.username}
+        className={`hideMobile`}
+        onClick={handleDrawerToggle}
+      />
     </div>
   );
 };

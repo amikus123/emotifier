@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme: Theme) =>
       transition: "all 0.5s",
       maxWidth: "320px",
       width: "min-content",
-      marginTop: "4px",
 
       [theme.breakpoints.up("sm")]: {
         marginLeft: theme.spacing(3),
