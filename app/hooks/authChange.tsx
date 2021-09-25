@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getUserById } from "../utils/firestoreAccess/user";
-import { getThemeFromString } from "../constans/themeConfig";
-import { useDispatch, useSelector } from "react-redux";
 import { overWriteData } from "../store/features/user/userSlice";
 
 import store from "../store/store";

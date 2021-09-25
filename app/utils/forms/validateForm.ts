@@ -46,3 +46,4 @@ export const validateProfilePic = (emoji: string) => {
   // TO DO
   return false;
 };
+

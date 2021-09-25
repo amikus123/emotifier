@@ -3,6 +3,8 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import { IconButton, Typography } from "@material-ui/core";
 import Skeleton from "@material-ui/lab/Skeleton";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -26,40 +28,46 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 interface Props {
-  text?: string;
+  showName?: boolean;
   className?: string;
-  src?: string;
   onClick?: (arg: any) => any;
 }
 const UserProfile = ({
-  text,
+  showName = true,
   className = "",
   onClick = () => {},
-  src = "",
 }: Props) => {
   const classes = useStyles();
+  // gets user data from global store
+  const user = useSelector((state: RootState) => state.user);
 
   return (
     <div className={`${classes.root} ${className}`} onClick={onClick}>
-      {text !== undefined ? (
-          text===""?(
-<Skeleton variant="text"    animation="wave" width={40}  className={classes.name}/>
-          ):(
-            <Typography className={classes.name}>{text}</Typography>
-          )      
+      {showName ? (
+        user.username === "" ? (
+          <Skeleton
+            variant="text"
+            animation="wave"
+            height={24}
+            width={56}
+            className={classes.name}
+          />
+        ) : (
+          <Typography className={classes.name}>{user.username}</Typography>
+        )
       ) : null}
 
       <IconButton>
-        {
-          src!==""?
+        {user.profilePic !== "" ? (
           <Avatar
-          alt="Remy Sharp"
-          src={src}
-          className={classes.img}
-          variant="square"
-        />:<Skeleton variant="rect" animation="wave" width={48} height={48} />
-        }
-       
+            alt="Remy Sharp"
+            src={user.profilePic}
+            className={classes.img}
+            variant="square"
+          />
+        ) : (
+          <Skeleton variant="rect" animation="wave" width={48} height={48} />
+        )}
       </IconButton>
     </div>
     // </Link>

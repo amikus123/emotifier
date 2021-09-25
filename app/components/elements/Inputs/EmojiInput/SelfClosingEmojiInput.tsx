@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     input: {
       borderRadius: theme.shape.borderRadius,
-      background: theme.palette.common.white,
+      background: "#e8e8e8",
       "&:focus": {
         "& >  .MuiOutlinedInput-notchedOutline": {
           borderColor: `${theme.palette.common.black}!important`,
@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
     button: {
       cursor: "pointer",
       margin: "0!important",
+      // backgroundColor: "rgba(0, 0, 0, 0.09)",
     },
 
     closeButton: {
@@ -124,7 +125,7 @@ const SelfClosingEmojiInput = ({
         name={label}
         type="text"
         value={text}
-        color="secondary"
+        // color="secondary"
         label=""
         onChange={() => {
           allowEmojisAndDeleting(setText);

@@ -7,15 +7,16 @@ import EmojiInput from "../../../elements/Inputs/EmojiInput/EmojiInput";
 import { makeStyles, Theme, createStyles } from "@material-ui/core";
 import { useRouter } from "next/router";
 import ProfilePicSelector from "../../../elements/Inputs/ProfilePicSelector/ProfilePicSelector";
-
 import {
   addEmojiUsername,
   loginWithEmail,
   registerWithEmail,
   loginWithGoogle,
   loginWithFacebook,
+  createPost,
 } from "../../../../utils/forms/formHandlers";
 import { validationTextCodes } from "../../../../constans/validationCodes";
+import ImageInput from "../../../elements/Inputs/ImageInput/ImageInput";
 
 const options = {
   emailLogin: {
@@ -24,6 +25,8 @@ const options = {
       password: "",
       profilePic: null,
       username: null,
+      text: null,
+      images: null,
     },
   },
   emailRegistration: {
@@ -32,6 +35,8 @@ const options = {
       email: "",
       password: "",
       profilePic: "",
+      text: null,
+      images: null,
     },
   },
   usernameInput: {
@@ -40,6 +45,18 @@ const options = {
       profilePic: "",
       password: null,
       email: null,
+      text: null,
+      images: null,
+    },
+  },
+  postCreation: {
+    defaultValues: {
+      username: null,
+      profilePic: null,
+      password: null,
+      email: null,
+      text: "",
+      images: [],
     },
   },
 };
@@ -62,10 +79,11 @@ type FormFunctions =
   | typeof registerWithEmail
   | typeof loginWithGoogle
   | typeof loginWithFacebook
-  | typeof addEmojiUsername;
+  | typeof addEmojiUsername
+  | typeof createPost;
 interface Props {
   handleSubmit: FormFunctions;
-  type: "emailLogin" | "emailRegistration" | "usernameInput";
+  type: "emailLogin" | "emailRegistration" | "usernameInput" | "postCreation";
 }
 
 const FormGenerator = ({ handleSubmit, type }: Props) => {
@@ -82,16 +100,26 @@ const FormGenerator = ({ handleSubmit, type }: Props) => {
   }, [formValuesErrors]);
 
   const handleGenerator = (valueName: string) => {
-    const res = (newValue: string) => {
-      setFormValues({ ...formValues, [valueName]: newValue });
-    };
-    return res;
+    if (valueName !== "images") {
+      const res = (newValue: string) => {
+        setFormValues({ ...formValues, [valueName]: newValue });
+      };
+      return res;
+    } else {
+      const res = (newValue: string) => {
+        setFormValues({ ...formValues, [valueName]: newValue });
+      };
+      return res;
+    }
   };
 
   const resetErrorTextGenerator = (valueName: string) => {
+    // restes the chosen
     const res = () => {
-      console.log("should reset ", valueName);
-      setFormValuesErrors({ ...formValuesErrors, [valueName]: "" });
+      setFormValuesErrors({
+        ...formValuesErrors,
+        [valueName]: options[type][valueName],
+      });
     };
     return res;
   };
@@ -108,15 +136,16 @@ const FormGenerator = ({ handleSubmit, type }: Props) => {
         const res = await handleSubmit(formValues);
         if (res.error) {
           setFormValuesErrors(res.errorValues);
+        } else if (
+          res.text === validationTextCodes.goFeed ||
+          res.text === validationTextCodes.loggedIn
+        ) {
+          router.push("/feed");
+        } else {
+          console.error("!!!!");
         }
-          else if (
-            res.text === validationTextCodes.goFeed ||
-            res.text === validationTextCodes.loggedIn
-          ) {
-            router.push("/feed");
-          } else {
-            console.error("!!!!");
-          }
+      } else if (type === "postCreation") {
+        // to do
       } else {
         if (
           res.text === validationTextCodes.goFeed ||
@@ -173,7 +202,18 @@ const FormGenerator = ({ handleSubmit, type }: Props) => {
             text={formValues.profilePic}
           />
         ) : null}
-
+        {formValues.text !== null ? (
+         <EmojiInput
+         setText={handleGenerator("text")}
+         text={formValues.text}
+         label="nick"
+         errorText={formValuesErrors.text}
+         resetErrorText={resetErrorTextGenerator("text")}
+       />
+        ) : null}
+        {formValues.images !==null?(
+          <ImageInput/>
+        ):null}
         <Button
           variant="contained"
           color="primary"

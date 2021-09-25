@@ -13,6 +13,7 @@ import {
   EmailRegisterFormValues,
   EmailLoginFormValues,
 } from "../../types/auth";
+import { PostCreationFormValues } from "../../types/postCreation";
 import { getUserById } from "../firestoreAccess/user";
 import { writeUserData } from "../firestoreWrite/user";
 import {
@@ -20,6 +21,7 @@ import {
   validateEmail,
   validatePassword,
   validateProfilePic,
+
 } from "./validateForm";
 
 const auth = getAuth();
@@ -36,6 +38,8 @@ interface ErrorValues {
   email: string;
   password: string;
   profilePic: string;
+  text:string;
+  images:any[];
 }
 
 const functionToKey = {
@@ -63,11 +67,13 @@ const getDefaultErrorValues = () => {
     email: "",
     password: "",
     profilePic: "",
+    text:"",
+    images:[]
   };
 };
 
 export const validateInput = (
-  data: EmailRegisterFormValues | EmailLoginFormValues,
+  data: any,
   errorValues: ErrorValues
 ): FormValidationResult => {
   let errorCount = 0;
@@ -243,3 +249,51 @@ export const loginWithEmail = async (
 
 export const loginWithFacebook = loginWithExternalGenerator("facebook");
 export const loginWithGoogle = loginWithExternalGenerator("google");
+
+
+export const createPost = async (  data: PostCreationFormValues
+  )=>{
+  const errorValues = getDefaultErrorValues();
+  try {
+    const errorValidationResult = validateInput({...data,email:null,password:null}, errorValues);
+    if (errorValidationResult.error) {
+      return errorValidationResult;
+    }
+    const userId = auth.currentUser.uid;
+    const docRef = doc(db, "users", userId);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      // await updateDoc(docRef, {
+      //   username,
+      //   profilePic,
+      // });
+      console.log(
+        "Added nick:",
+        returnErrorValidationResult(
+          errorValues,
+          false,
+          validationTextCodes.goFeed
+        )
+      );
+      return returnErrorValidationResult(
+        errorValues,
+        false,
+        validationTextCodes.goFeed
+      );
+    } else {
+      console.log("Document does not exist:");
+      return returnErrorValidationResult(
+        errorValues,
+        true,
+        validationTextCodes.failedToAddEmojiUsername
+      );
+    }
+  } catch (e) {
+    console.error(e, "addEmojiUsername JEBLO ");
+    return returnErrorValidationResult(
+      errorValues,
+      true,
+      validationTextCodes.failedToAddEmojiUsername
+    );
+  }
+}

@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"name": "emojifier",
+			"path": "."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "news-comparer"
+	}
+}

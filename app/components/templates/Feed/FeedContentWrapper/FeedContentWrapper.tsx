@@ -7,10 +7,10 @@ const FeedContentWrapper = ({children=null}:Props) => {
   const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      backgroundColor:"red",
-      width:"30rem",
-      height:"30rem",
-      marginLeft:"255px",
+      backgroundColor:"yellow",
+      justifyContent:"center",
+      display:"flex",
+      width:"100%"
     },}))
   const classes = useStyles();
   return (

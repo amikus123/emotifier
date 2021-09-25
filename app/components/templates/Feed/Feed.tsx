@@ -26,13 +26,7 @@ const Feed = () => {
       <Header setTabNumber={setTabNumber}    handleDrawerToggle={() => {
           setMobileOpen(!mobileOpen);
         }}/>
-      {/* <SideDrawer
-        handleDrawerToggle={() => {
-          setMobileOpen(!mobileOpen);
-        }}
-        mobileOpen={mobileOpen}
-      /> */}
-      <FeedContentWrapper>{listOfFeeds[tabNumber]}</FeedContentWrapper>
+       <FeedContentWrapper>{listOfFeeds[tabNumber]}</FeedContentWrapper>
       <SideFriends
         handleDrawerToggle={() => {
           setMobileOpen(!mobileOpen);

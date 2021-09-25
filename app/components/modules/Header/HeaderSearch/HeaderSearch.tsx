@@ -44,7 +44,7 @@ const HeaderSearchController = ({ text, setText }: Props) => {
         text={text}
         setText={setText}
         abs={true}
-        label="Search"
+        label="🔍"
         suggsestions={true}
         className={`${classes.showInput} ${classes.search} hideMobile`}
         outlined={false}

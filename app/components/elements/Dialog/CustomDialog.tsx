@@ -7,7 +7,6 @@ import {
   Button,
 } from "@material-ui/core";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { CallReceivedSharp } from "@material-ui/icons";
 
 import React from "react";
 

@@ -13,16 +13,21 @@ const useStyles = makeStyles((theme: Theme) =>
         justifyContent: "start",
         border: "0px  solid !important",
         fontWeight: "bold",
+        "&>span>span":
+        {
+        }
       },
+    
     })
   );
 interface Props {
-  icon: any;
-  onClick: () => any;
+  ElementIcon?:any,
+  icon?: any;
+  onClick?: () => any;
   className?: string;
-  children: any;
+  children?: any;
 }
-const ButtonWithEmoji = ({ icon, onClick, className, children }: Props) => {
+const ButtonWithEmoji = ({ icon, onClick, className, children,ElementIcon }: Props) => {
   
   const classes = useStyles();
 
@@ -31,13 +36,16 @@ const ButtonWithEmoji = ({ icon, onClick, className, children }: Props) => {
       className={`${className} ${classes.root}`}
       size="large"
       variant="contained"
-      onClick={onClick}
+      onClick={onClick?onClick:null}
       startIcon={
-        <Avatar
-          variant="square"
-          src={icon?.src ? icon.src : icon}
-          style={{ marginRight: "0.25rem" }}
-        />
+        ElementIcon?<ElementIcon  style={children?{ marginRight: "1rem" }:{marginLeft:"1rem"}}/>:icon? (
+          <Avatar
+            variant="square"
+            src={icon?.src ? icon.src : icon}
+            style={children?{ marginRight: "0.25rem" }:{marginLeft:"0px"}}
+          />
+          ):null 
+       
       }
     >
       {children}
