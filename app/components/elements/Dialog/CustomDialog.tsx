@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     content: {
       margin: "1rem",
-      width: "50vw",
+      minWidth: "50vw",
 
     },
   })

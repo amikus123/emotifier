@@ -10,6 +10,8 @@ import {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {
+        position:"relative",
+
         justifyContent: "start",
         border: "0px  solid !important",
         fontWeight: "bold",
@@ -17,7 +19,8 @@ const useStyles = makeStyles((theme: Theme) =>
         {
         }
       },
-    
+      label:{
+      }
     })
   );
 interface Props {
@@ -33,7 +36,10 @@ const ButtonWithEmoji = ({ icon, onClick, className, children,ElementIcon }: Pro
 
   return (
     <Button
-      className={`${className} ${classes.root}`}
+      classes={{
+        root:`${className} ${classes.root}`,
+        label:classes.label
+      }}
       size="large"
       variant="contained"
       onClick={onClick?onClick:null}
