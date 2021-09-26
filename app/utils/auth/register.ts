@@ -1,5 +1,4 @@
-
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc,setDoc } from "firebase/firestore";
 import { db } from "../../../pages/_app";
 
 // EmailRegisterFormValues
@@ -8,23 +7,34 @@ type Values = "usernames" | "postNames";
 
 export const addToUsedValues = async (
   text: string,
-  type: Values = "usernames"
 ) => {
   // marks name as used
-  const docRef = doc(db, `usedNames/${type}/${text}`);
+  const docRef = doc(db, `usedNames`, text);
   const docSnap = await getDoc(docRef);
-  console.log("111");
   if (docSnap.exists()) {
+    console.log("didint add");
     return false;
   } else {
-    await updateDoc(docRef, {
-      a: "a",
+    await setDoc(docRef, {
+      [text]: text,
     });
+    console.log("added");
     return true;
   }
 };
-
-
+export const checkIfinUse = async (
+  text: string,
+) => {
+  // marks name as used
+  const docRef = doc(db, `usedNames`, text);
+  const docSnap = await getDoc(docRef);
+  console.log("snap",docSnap);
+  if (docSnap.exists()) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
 // functions check passed input
 // and return errror message realted to the error

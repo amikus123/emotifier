@@ -65,7 +65,6 @@ const EmojiInput = ({
     // selects input, then focuses it
     const input = el.children[1].children[0]
     input.focus()
-   
   }
 
   return (

@@ -1,4 +1,3 @@
-import { snapshotEqual } from "@firebase/firestore";
 import { getDownloadURL, getStorage, ref,uploadBytes,deleteObject  } from "firebase/storage";
 const storage = getStorage();
 

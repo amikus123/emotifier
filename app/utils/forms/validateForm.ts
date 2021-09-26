@@ -1,20 +1,23 @@
 import GraphemeSplitter from "grapheme-splitter";
+import { checkIfinUse } from "../auth/register";
 
-export const validateUsername = (username: string) => {
+export const validateUsername = async (username: string) => {
   const splitter = new GraphemeSplitter();
   const arr = splitter.splitGraphemes(username); 
 
   if (username === "") {
     return "Username can not be empty";
-  } else if (arr.length > 3) {
+  } else if (arr.length > 5) {
     return "Username is too long";
   } else if (
     false
     // emoji only chjeck
   ) {
-    return "USername should only cotnain emojis";
-  } else {
-    return false;
+    return "Username should only cotnain emojis";
+  }
+  const inUse = await checkIfinUse(username)
+  if(inUse){
+    return "Username already in use"
   }
 };
 
@@ -47,3 +50,11 @@ export const validateProfilePic = (emoji: string) => {
   return false;
 };
 
+
+export const validateText = (username: string) => {
+ return false
+};
+
+export const validateImages = (arr: string[]) => {
+  return false
+};

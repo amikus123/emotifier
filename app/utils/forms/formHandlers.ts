@@ -21,11 +21,15 @@ import {
   validateEmail,
   validatePassword,
   validateProfilePic,
+  validateImages,
+  validateText,
 
 } from "./validateForm";
+import { v4 as uuidv4 } from "uuid";
+import { addPostToUser } from "../firestoreWrite/postCreation";
+
 
 const auth = getAuth();
-console.log(auth.currentUser);
 
 interface FormValidationResult {
   errorValues: ErrorValues;
@@ -47,6 +51,8 @@ const functionToKey = {
   email: validateEmail,
   password: validatePassword,
   profilePic: validateProfilePic,
+  text:validateText,
+  images:validateImages,
 };
 
 const returnErrorValidationResult = (
@@ -72,20 +78,22 @@ const getDefaultErrorValues = () => {
   };
 };
 
-export const validateInput = (
+export const validateInput = async(
   data: any,
   errorValues: ErrorValues
-): FormValidationResult => {
+): Promise<FormValidationResult> => {
   let errorCount = 0;
-  Object.keys(data).forEach((key) => {
+  for (const key of Object.keys(data)){
     if (data[key] !== null) {
-      const error = functionToKey[key](data[key]);
+      console.log(data[key],key,functionToKey[key])
+      const error = await functionToKey[key](data[key]);
       if (error) {
         errorValues[key] = error;
         errorCount++;
       }
     }
-  });
+  }
+
   // check if any inmput is incorrect
   const isError = errorCount != 0;
   return returnErrorValidationResult(errorValues, isError);
@@ -145,7 +153,7 @@ export const addEmojiUsername = async (values: {
   try {
     const auth = getAuth();
     const { username, profilePic } = values;
-    const errorValidationResult = validateInput({...values,email:null,password:null}, errorValues);
+    const errorValidationResult = await validateInput({...values,email:null,password:null}, errorValues);
 
     if (errorValidationResult.error) {
       return errorValidationResult;
@@ -196,7 +204,7 @@ export const registerWithEmail = async (
   const errorValues = getDefaultErrorValues();
 
   try {
-    const errorValidationResult = validateInput(data, errorValues);
+    const errorValidationResult = await validateInput(data, errorValues);
     const auth = getAuth();
     if (errorValidationResult.error) {
       return errorValidationResult;
@@ -207,7 +215,6 @@ export const registerWithEmail = async (
         password
       );
       const user = userCredential.user;
-      console.log("before fails");
       await writeUserData(username, email, user.uid, profilePic);
       errorValidationResult.text = validationTextCodes.goFeed;
       return errorValidationResult;
@@ -226,7 +233,7 @@ export const loginWithEmail = async (
   const { email, password } = data;
   const errorValues = getDefaultErrorValues();
   try {
-    const errorValidationResult = validateInput(data, errorValues);
+    const errorValidationResult = await validateInput(data, errorValues);
     const auth = getAuth();
     if (errorValidationResult.error) {
       return errorValidationResult;
@@ -253,42 +260,23 @@ export const loginWithGoogle = loginWithExternalGenerator("google");
 
 export const createPost = async (  data: PostCreationFormValues
   )=>{
+    console.log("DATA",data)
   const errorValues = getDefaultErrorValues();
   try {
-    const errorValidationResult = validateInput({...data,email:null,password:null}, errorValues);
+    const errorValidationResult = await validateInput({...data,email:null,password:null}, errorValues);
     if (errorValidationResult.error) {
       return errorValidationResult;
     }
+    const postId = uuidv4();
+
     const userId = auth.currentUser.uid;
-    const docRef = doc(db, "users", userId);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      // await updateDoc(docRef, {
-      //   username,
-      //   profilePic,
-      // });
-      console.log(
-        "Added nick:",
-        returnErrorValidationResult(
-          errorValues,
-          false,
-          validationTextCodes.goFeed
-        )
-      );
-      return returnErrorValidationResult(
-        errorValues,
-        false,
-        validationTextCodes.goFeed
-      );
-    } else {
-      console.log("Document does not exist:");
-      return returnErrorValidationResult(
-        errorValues,
-        true,
-        validationTextCodes.failedToAddEmojiUsername
-      );
-    }
-  } catch (e) {
+    // should add information about he post in user doc
+    // should cretae post
+   await  addPostToUser(userId,postId)
+   return errorValidationResult;
+
+  }
+ catch (e) {
     console.error(e, "addEmojiUsername JEBLO ");
     return returnErrorValidationResult(
       errorValues,
