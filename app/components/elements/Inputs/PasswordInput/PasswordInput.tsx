@@ -26,6 +26,8 @@ const PasswordInput = ({ password, setPassword, errorText ,resetErrorText}: Prop
       type={showPassword ? "text" : "password"}
       value={password}
       label="Password"
+      fullWidth={true}
+
       onChange={(e) => {
         setPassword(e.target.value);
         if(errorText && resetErrorText){

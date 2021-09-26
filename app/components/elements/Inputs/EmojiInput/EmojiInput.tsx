@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       position: "relative",
+      width:"100%",
       borderRadius: theme.shape.borderRadius,
     },
     input: {
@@ -69,9 +70,10 @@ const EmojiInput = ({
       className={`${classes.root} ${className}`}
     >
       <TextField
+                fullWidth={true}
+
         size={size}
         error={!!errorText}
-        fullWidth={true}
         inputProps={{ autoComplete: "off" }}
         name={label}
         type="text"

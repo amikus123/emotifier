@@ -15,7 +15,7 @@ const Images = ({filePaths,removeFileGenertor}:Props) => {
   return (
     <div>
       {filePaths.map((path,index)=>{
-        return <Avatar src={path} key={index} onClick={()=>handleClick(index)}/>
+        return <Avatar  src={path} key={index} onClick={()=>handleClick(index)}/>
       })}
     </div>
   )

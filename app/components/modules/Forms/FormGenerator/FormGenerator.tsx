@@ -64,12 +64,10 @@ const options = {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      "&  >div": {
-        width: "100%",
+      display:"flex",
+      justifyContent:'center',
+      "& >*": {
         paddingBottom: "2rem",
-        "& >div": {
-          width: "100%",
-        },
       },
     },
   })

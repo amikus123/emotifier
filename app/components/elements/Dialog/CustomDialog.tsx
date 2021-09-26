@@ -12,9 +12,12 @@ import React from "react";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {},
+    root: {
+    },
     content: {
       margin: "1rem",
+      width: "50vw",
+
     },
   })
 );
@@ -34,7 +37,7 @@ const CustomDialog = ({ open, handleClose, children, dialogTitle }: Props) => {
       open={open}
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
-      classes={{ paper: classes.content }}
+      classes={{ paper: classes.content,root:classes.root }}
     >
       <DialogTitle id="form-dialog-title">{dialogTitle}</DialogTitle>
       <DialogContent>
