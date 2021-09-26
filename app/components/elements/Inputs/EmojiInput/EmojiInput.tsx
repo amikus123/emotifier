@@ -16,13 +16,12 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       position: "relative",
-      width:"100%",
+      width: "100%",
       borderRadius: theme.shape.borderRadius,
     },
     input: {
       background: theme.palette.common.white,
       borderRadius: theme.shape.borderRadius,
-      
     },
   })
 );
@@ -56,9 +55,18 @@ const EmojiInput = ({
 }: Props) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const container = useRef(null);
+  const input = useRef(null);
+
   const classes = useStyles();
 
   useHeaderOutsideClick(container, setShowEmojiPicker, showEmojiPicker);
+
+  function moveCursorToEnd(el) {
+    // selects input, then focuses it
+    const input = el.children[1].children[0]
+    input.focus()
+   
+  }
 
   return (
     <Grid
@@ -70,8 +78,8 @@ const EmojiInput = ({
       className={`${classes.root} ${className}`}
     >
       <TextField
-                fullWidth={true}
-
+        fullWidth={true}
+        ref={input}
         size={size}
         error={!!errorText}
         inputProps={{ autoComplete: "off" }}
@@ -81,6 +89,7 @@ const EmojiInput = ({
         label={capitalize(label)}
         onChange={(e) => {
           allowEmojisAndDeleting(setText)(e);
+          alert("XD");
           if (errorText && resetErrorText) {
             resetErrorText();
           }
@@ -103,6 +112,7 @@ const EmojiInput = ({
             if (errorText && resetErrorText) {
               resetErrorText();
             }
+            moveCursorToEnd(input.current);
           }}
           abs={abs}
         />

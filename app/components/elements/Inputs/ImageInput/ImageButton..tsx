@@ -17,6 +17,8 @@ const ImageButton = ({ handleChange, errorText }: Props) => {
       justifyContent="center"
       alignItems="center"
     >
+      {/* one sets the button size, other covers the whole button, */}
+       {/* so every click triggers the input */}
       <ButtonWithEmoji>
         <label
           htmlFor="single"
@@ -41,6 +43,7 @@ const ImageButton = ({ handleChange, errorText }: Props) => {
         </label>
       </ButtonWithEmoji>
       <input
+      // hardcoded input disables default input behaviour
         value=""
         type="file"
         id="single"

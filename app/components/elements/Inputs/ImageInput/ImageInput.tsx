@@ -73,7 +73,7 @@ const ImageInput = () => {
     console.log([filePaths, files]);
   }, [filePaths, files]);
   return (
-    <>
+    <div>
       <ImageButton handleChange={handleChange} errorText={errorText} />
       {uploading ? (
         <div style={{ padding: "1rem 0" }}>
@@ -81,7 +81,7 @@ const ImageInput = () => {
         </div>
       ) : null}
       <Images filePaths={filePaths} removeFileGenertor={removeFileGenertor} />
-    </>
+    </div>
   );
 };
 

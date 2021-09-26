@@ -66,9 +66,10 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display:"flex",
       justifyContent:'center',
-      "& >*": {
+      "& >div": {
         paddingBottom: "2rem",
       },
+   
     },
   })
 );
@@ -204,7 +205,7 @@ const FormGenerator = ({ handleSubmit, type }: Props) => {
          <EmojiInput
          setText={handleGenerator("text")}
          text={formValues.text}
-         label="nick"
+         label="Emojis"
          errorText={formValuesErrors.text}
          resetErrorText={resetErrorTextGenerator("text")}
        />
